@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
-// Подключаем Google Font для технологичного вида
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Image from "next/image"; // Нужен для оптимизированных картинок
-
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+import "./globals.css"; // Это критически важно для дизайна!
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Rialo Academy",
-  description: "Интерактивная школа блокчейна нового поколения",
+  description: "Интерактивная школа Rialo",
 };
 
 export default function RootLayout({
@@ -17,26 +13,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className="h-full">
-      <body className={`${inter.className} h-full bg-[#FFFBF5]`}>
-        {/* Основной контент страницы */}
+    <html lang="ru">
+      <body className="bg-[#FFFBF5]">
         {children}
 
-        {/* Наш Агент-Учитель */}
-        <div className="fixed bottom-5 right-5 z-50 pointer-events-none select-none">
-          {/* pointer-events-none: чтобы сквозь него можно было кликать
-            opacity-80: делаем его полупрозрачным
-          */}
-          <div className="relative w-32 h-32 opacity-80 hover:opacity-100 transition-opacity duration-300">
-             
-           <Image 
-  src="/avatar.png.png" // Используем имя как на твоем скриншоте
-  alt="Rialo Agent Guide" 
-  width={200} 
-  height={200}
-  className="object-contain drop-shadow-2xl"
-  priority
-/>
+        {/* Наш Агент-Викинг */}
+        <div className="fixed bottom-5 right-5 z-50 pointer-events-none">
+          <div className="relative w-40 h-40 opacity-90">
+            <Image 
+              src="/avatar.png" // Используем точное имя твоего файла
+              alt="Rialo Guide" 
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
         </div>
       </body>

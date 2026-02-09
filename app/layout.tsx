@@ -20,13 +20,13 @@ export default function RootLayout({
         {/* Наш Агент-Викинг */}
         <div className="fixed bottom-5 right-5 z-50 pointer-events-none">
           <div className="relative w-40 h-40 opacity-90">
-            <Image 
-              src="/avatar.png" // Используем точное имя твоего файла
-              alt="Rialo Guide" 
-              fill
-              className="object-contain"
-              priority
-            />
+          <Image 
+  src="/avatar.png" // Теперь путь совпадает с твоим файлом
+  alt="Rialo Guide" 
+  fill
+  className="object-contain"
+  priority
+/>
           </div>
         </div>
       </body>

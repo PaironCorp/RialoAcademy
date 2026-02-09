@@ -1,8 +1,11 @@
 "use client";
+
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users } from 'lucide-react';
+import { 
+  Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users 
+} from 'lucide-react';
 
 export default function RialoAtrium() {
   const classes = [
@@ -18,19 +21,31 @@ export default function RialoAtrium() {
 
   return (
     <main className="min-h-screen p-8 flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-black text-slate-900 mb-4">Атриум Rialo Academy</h1>
-      <p className="text-slate-500 mb-12 text-center max-w-xl">Добро пожаловать в цифровой двор будущего. Выбери портал для обучения.</p>
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-12"
+      >
+        <h1 className="text-4xl md:text-6xl font-black text-slate-900 mb-4">
+          Атриум <span className="text-orange-500">Rialo Academy</span>
+        </h1>
+        <p className="text-slate-500 text-lg max-w-xl mx-auto">
+          Выбери портал, чтобы начать обучение архитектуре реального мира.
+        </p>
+      </motion.div>
       
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl w-full">
         {classes.map((cls) => (
           <Link href={cls.path} key={cls.id}>
             <motion.div 
-              whileHover={{ y: -5 }}
-              className="p-6 bg-white rounded-3xl border border-slate-200 shadow-xl flex flex-col items-center text-center cursor-pointer hover:border-orange-400"
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="p-8 bg-white rounded-[2rem] border border-slate-200 shadow-xl flex flex-col items-center text-center cursor-pointer hover:border-orange-400 transition-all h-full"
             >
-              <div className="mb-4 text-orange-500"><cls.icon size={32} /></div>
-              <h3 className="font-bold text-slate-800">{cls.title}</h3>
-              <p className="text-xs text-slate-400 mt-2 uppercase">{cls.desc}</p>
+              <div className="mb-4 p-4 bg-orange-50 rounded-2xl text-orange-500">
+                <cls.icon size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-800">{cls.title}</h3>
+              <p className="text-xs text-slate-400 mt-2 uppercase tracking-tighter font-bold">{cls.desc}</p>
             </motion.div>
           </Link>
         ))}

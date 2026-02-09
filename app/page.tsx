@@ -3,160 +3,70 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { 
-  Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users 
-} from 'lucide-react';
+import { Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users } from 'lucide-react';
 
-export default function RialoAtrium() {
-  const nexusModules = [
-    { 
-      id: 1, 
-      title: "ECONOMICS", 
-      icon: Coins, 
-      tagline: "VERTICAL INTEGRATION",
-      desc: "Solving Double Marginalization by eliminating the 90% middleware tax.",
-      path: "/economics", 
-      color: "from-orange-500 to-amber-600" 
-    },
-    { 
-      id: 2, 
-      title: "RIALO EDGE", 
-      icon: Globe, 
-      tagline: "NATIVE CONNECTIVITY",
-      desc: "Direct HTTPS-bridge to Web2 without fragmented oracle latency.",
-      path: "#", 
-      color: "from-blue-500 to-cyan-500" 
-    },
-    { 
-      id: 3, 
-      title: "VELOCITY", 
-      icon: Zap, 
-      tagline: "50MS BLOCKTIME",
-      desc: "Internet-scale responsiveness through high-performance execution layers.",
-      path: "#", 
-      color: "from-yellow-400 to-orange-500" 
-    },
-    { 
-      id: 4, 
-      title: "WORKFLOWS", 
-      icon: Cog, 
-      tagline: "NATIVE AUTOMATION",
-      desc: "Autonomous smart contracts triggered by real-world events natively.",
-      path: "#", 
-      color: "from-purple-500 to-pink-500" 
-    },
-    { 
-      id: 5, 
-      title: "PRIVACY", 
-      icon: ShieldAlert, 
-      tagline: "REX COMPUTATION",
-      desc: "Confidential off-chain execution with verifiable on-chain proofs.",
-      path: "#", 
-      color: "from-emerald-500 to-teal-500" 
-    },
-    { 
-      id: 6, 
-      title: "DEVELOPERS", 
-      icon: Code2, 
-      tagline: "SVM & RUST STACK",
-      desc: "Seamless migration for Solana devs with full-stack enhancements.",
-      path: "#", 
-      color: "from-indigo-500 to-blue-500" 
-    },
-    { 
-      id: 7, 
-      title: "AI AGENTS", 
-      icon: Bot, 
-      tagline: "AUTONOMOUS INTELLIGENCE",
-      desc: "Enabling AI agents to transact and interact with the physical world.",
-      path: "#", 
-      color: "from-red-500 to-rose-500" 
-    },
-    { 
-      id: 8, 
-      title: "COMMUNITY", 
-      icon: Users, 
-      tagline: "RIALO RAID ARMY",
-      desc: "Join the collective building the future of real-world blockchain.",
-      path: "#", 
-      color: "from-slate-400 to-slate-600" 
-    },
+export default function RialoNexusAtrium() {
+  const modules = [
+    { id: 1, title: "ECONOMICS", tagline: "VERTICAL INTEGRATION", desc: "Defeating Double Marginalization via full-stack architecture.", path: "/economics", icon: Coins },
+    { id: 2, title: "RIALO EDGE", tagline: "NATIVE CONNECTIVITY", desc: "Low-latency HTTPS bridges for direct Web2 data ingestion.", path: "#", icon: Globe },
+    { id: 3, title: "VELOCITY", tagline: "ULTRA-FAST BLOCKS", desc: "50ms execution layers designed for global internet-scale.", path: "#", icon: Zap },
+    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Event-driven smart contracts acting without external keepers.", path: "#", icon: Cog },
+    { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Zero-knowledge verification for confidential execution logic.", path: "#", icon: ShieldAlert },
+    { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "The high-performance habitat for advanced SVM builders.", path: "#", icon: Code2 },
+    { id: 7, title: "AI AGENTS", tagline: "MACHINE ECONOMY", desc: "Sovereign on-chain infrastructure for autonomous AI.", path: "#", icon: Bot },
+    { id: 8, title: "NETWORK", tagline: "THE COLLECTIVE", desc: "Join the Rialo ecosystem and define the future of dApps.", path: "#", icon: Users },
   ];
 
   return (
-    <main className="min-h-screen bg-[#020202] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
+    <main className="min-h-screen flex flex-col items-center justify-center p-6 py-20 overflow-hidden">
       
-      {/* Background Cyber-Grid */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none" 
-           style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '50px 50px' }}>
-      </div>
-
-      {/* Hero Section */}
+      {/* Header with floating animation */}
       <motion.div 
-        initial={{ opacity: 0, y: -30 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-20 relative z-10"
+        transition={{ duration: 1 }}
+        className="text-center mb-24 relative"
       >
-        <h1 className="text-6xl md:text-8xl font-black mb-4 tracking-tighter italic italic">
-          THE <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 bg-clip-text text-transparent">RIALO</span> NEXUS
+        <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-rialo-beige uppercase italic">
+          RIALO <span className="text-rialo-mint text-glow">NEXUS</span>
         </h1>
-        <div className="flex items-center justify-center space-x-4">
-           <span className="h-[1px] w-12 bg-orange-500/50"></span>
-           <p className="text-slate-400 font-mono tracking-[0.3em] uppercase text-xs">
-             System Status: <span className="text-green-500 animate-pulse">Operational</span> // Full-Stack Protocol
-           </p>
-           <span className="h-[1px] w-12 bg-orange-500/50"></span>
-        </div>
+        <p className="font-mono text-[10px] md:text-xs tracking-[0.6em] text-rialo-mint/50 uppercase">
+          Autonomous Full-Stack Protocol // Active Session
+        </p>
       </motion.div>
       
-      {/* Portal Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full relative z-10">
-        {nexusModules.map((mod) => (
-          <Link href={mod.path} key={mod.id}>
+      {/* Interactive Portal Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full">
+        {modules.map((mod, index) => (
+          <Link href={mod.path} key={mod.id} className="group">
             <motion.div 
-              whileHover={{ scale: 1.02, y: -5 }}
-              className="group relative h-72 cursor-pointer transition-all"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -10, boxShadow: "0 0 30px rgba(169, 221, 211, 0.1)" }}
+              className="h-full bg-rialo-beige/[0.02] backdrop-blur-xl border border-rialo-beige/10 rounded-[2.5rem] p-8 flex flex-col items-start justify-between transition-all duration-500 hover:border-rialo-mint/30"
             >
-              {/* Glow Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${mod.color} opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-500`}></div>
-              
-              {/* Main Card */}
-              <div className="h-full bg-slate-900/40 backdrop-blur-md border border-white/5 rounded-[2rem] p-8 flex flex-col items-start justify-between transition-all group-hover:border-orange-500/30 group-hover:bg-slate-900/60 shadow-2xl">
-                
-                <div className={`p-4 rounded-2xl bg-gradient-to-br ${mod.color} text-white shadow-lg`}>
-                  <mod.icon size={28} strokeWidth={2} />
-                </div>
+              <div className="p-4 rounded-2xl bg-rialo-mint/5 text-rialo-mint mb-10 group-hover:bg-rialo-mint/10 transition-colors">
+                <mod.icon size={28} />
+              </div>
 
-                <div>
-                  <p className="text-[10px] font-mono tracking-widest text-orange-500 mb-1 uppercase opacity-80">
-                    {mod.tagline}
-                  </p>
-                  <h3 className="text-2xl font-bold mb-3 tracking-tight">
-                    {mod.title}
-                  </h3>
-                  <p className="text-sm text-slate-400 leading-relaxed font-medium">
-                    {mod.desc}
-                  </p>
-                </div>
+              <div>
+                <p className="text-[9px] font-mono tracking-widest text-rialo-mint/70 mb-2">{mod.tagline}</p>
+                <h3 className="text-2xl font-bold text-rialo-beige mb-3 tracking-tight">{mod.title}</h3>
+                <p className="text-sm text-rialo-beige/40 leading-relaxed">{mod.desc}</p>
+              </div>
 
-                {/* Cyber line */}
-                <div className="w-full h-[1px] bg-white/5 mt-4 relative overflow-hidden">
-                   <motion.div 
-                    className={`h-full bg-gradient-to-r ${mod.color} w-full`}
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: "0%" }}
-                    transition={{ duration: 0.5 }}
-                   />
-                </div>
+              {/* Animated footer line for the card */}
+              <div className="w-full h-[1px] bg-rialo-beige/5 mt-6 overflow-hidden relative">
+                <motion.div 
+                  className="absolute inset-0 bg-rialo-mint/40"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                />
               </div>
             </motion.div>
           </Link>
         ))}
-      </div>
-
-      {/* Core Pulse */}
-      <div className="mt-24 relative">
-        <div className="w-1 h-1 bg-orange-500 rounded-full shadow-[0_0_20px_#f97316] animate-ping"></div>
       </div>
     </main>
   );

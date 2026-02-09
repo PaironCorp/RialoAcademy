@@ -22,20 +22,20 @@ export default function NexusBackground() {
         <Particles
             id="tsparticles"
             options={{
-                background: { color: { value: "#010101" } }, // Фирменный черный Rialo
+                background: { color: { value: "#010101" } }, // Rialo Black
                 fpsLimit: 120,
                 interactivity: {
                     events: {
-                        onHover: { enable: true, mode: "grab" }, // Линии тянутся к мышке
+                        onHover: { enable: true, mode: "grab" },
                     },
                     modes: {
                         grab: { distance: 200, links: { opacity: 0.5 } },
                     },
                 },
                 particles: {
-                    color: { value: "#A9DDD3" }, // Фирменный мятный Rialo
+                    color: { value: "#A9DDD3" }, // Rialo Mint
                     links: {
-                        color: "#A9DDD3",
+                        color: "#A9DDD3", //
                         distance: 150,
                         enable: true,
                         opacity: 0.2,
@@ -43,14 +43,14 @@ export default function NexusBackground() {
                     },
                     move: {
                         enable: true,
-                        speed: 0.8, // Плавное, "живое" движение
+                        speed: 0.6,
                         direction: "none",
                         outModes: { default: "bounce" },
                     },
-                    number: { value: 80, density: { enable: true } },
-                    opacity: { value: 0.3 },
+                    number: { value: 70, density: { enable: true } },
+                    opacity: { value: 0.4 },
                     shape: { type: "circle" },
-                    size: { value: { min: 1, max: 3 } },
+                    size: { value: { min: 1, max: 2 } },
                 },
                 detectRetina: true,
             }}

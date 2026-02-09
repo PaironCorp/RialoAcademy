@@ -29,13 +29,14 @@ export default function RootLayout({
           */}
           <div className="relative w-32 h-32 opacity-80 hover:opacity-100 transition-opacity duration-300">
              
-            <Image 
-              src="/avatar.png" 
-              alt="Rialo Agent Guide" 
-              fill
-              style={{ objectFit: "contain" }}
-              priority
-            />
+           <Image 
+  src="/avatar.png.png" // Используем имя как на твоем скриншоте
+  alt="Rialo Agent Guide" 
+  width={200} 
+  height={200}
+  className="object-contain drop-shadow-2xl"
+  priority
+/>
           </div>
         </div>
       </body>

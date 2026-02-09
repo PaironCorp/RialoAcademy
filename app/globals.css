@@ -2,12 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 255, 251, 245;
+  --background-end-rgb: 255, 255, 255;
 }
 
-/* Эффект свечения для Агента-Викинга */
-.agent-glow {
-  filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.4));
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Эффект свечения для карточек */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }

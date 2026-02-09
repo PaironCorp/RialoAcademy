@@ -1,81 +1,60 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link'; // Критически важный импорт
 import { motion } from 'framer-motion';
-import { ArrowLeft, Coins, TrendingDown, Layers, Calculator } from 'lucide-react';
-import Link from 'next/link';
+import { 
+  Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users 
+} from 'lucide-react';
 
-export default function EconomicsLesson() {
-  const [cost, setCost] = useState(100);
+export default function RialoAtrium() {
+  const classes = [
+    { 
+      id: 1, 
+      title: "Экономика", 
+      icon: Coins, 
+      desc: "Двойная маржинализация", 
+      path: "/economics" 
+    },
+    { id: 2, title: "Rialo Edge", icon: Globe, desc: "Web2 Connection", path: "#" },
+    { id: 3, title: "Скорость", icon: Zap, desc: "50ms Blocks", path: "#" },
+    { id: 4, title: "Автоматизация", icon: Cog, desc: "Native Workflows", path: "#" },
+    { id: 5, title: "Приватность", icon: ShieldAlert, desc: "REX Privacy", path: "#" },
+    { id: 6, title: "Девелоперам", icon: Code2, desc: "SVM & Rust", path: "#" },
+    { id: 7, title: "AI Агенты", icon: Bot, desc: "AI Infrastructure", path: "#" },
+    { id: 8, title: "Сообщество", icon: Users, desc: "Join the Army", path: "#" },
+  ];
 
   return (
-    <main className="min-h-screen bg-[#FFFBF5] p-6 md:p-12 font-sans relative">
-      {/* Кнопка назад */}
-      <Link href="/">
-        <motion.div whileHover={{ x: -5 }} className="flex items-center text-slate-500 hover:text-orange-600 cursor-pointer mb-8">
-          <ArrowLeft className="mr-2" size={20} /> Назад во двор
-        </motion.div>
-      </Link>
-
-      <div className="max-w-4xl mx-auto">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white rounded-[2rem] p-8 md:p-12 shadow-2xl border border-orange-100 relative overflow-hidden">
-          
-          {/* Декор: Оранжевый блик */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-3xl opacity-50 -mr-16 -mt-16"></div>
-
-          <div className="flex items-center mb-10">
-            <div className="p-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl text-white mr-6 shadow-lg shadow-orange-200">
-              <Coins size={36} />
-            </div>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tight">Экономика Rialo</h1>
-              <p className="text-orange-500 font-bold uppercase text-sm tracking-widest">Класс 01: Битва с налогами</p>
-            </div>
-          </div>
-
-          <section className="space-y-6 text-slate-700 text-lg leading-relaxed">
-            <p className="font-medium text-xl text-slate-800">
-              «В обычном Web3 разработчик платит "невидимый налог" каждому посреднику.»
-            </p>
-            
-            <p>
-              Представь: ты создаешь DeFi-приложение. Тебе нужен блокчейн (газ), оракулы (данные) и боты (автоматизация). Каждый из них — монополист, который накидывает свою маржу. Это и есть <strong>двойная маржинализация</strong>.
-            </p>
-
-            {/* ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР */}
-            <div className="my-12 p-8 bg-slate-900 rounded-[1.5rem] text-white shadow-inner">
-              <h3 className="text-xl font-bold mb-6 flex items-center text-orange-400">
-                <Calculator className="mr-3" /> Калькулятор Rialo-эффекта
-              </h3>
-              <div className="space-y-6">
-                <label className="block">
-                  <span className="text-slate-400 text-sm uppercase font-bold">Текущие затраты на middleware ($):</span>
-                  <input 
-                    type="range" min="10" max="1000" value={cost} 
-                    onChange={(e) => setCost(Number(e.target.value))}
-                    className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500 mt-4"
-                  />
-                  <div className="mt-2 font-mono text-2xl">${cost}</div>
-                </label>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-slate-800">
-                  <div className="p-4 bg-red-500/10 rounded-xl border border-red-500/20">
-                    <span className="text-xs uppercase text-red-400 font-bold">Старый Web3 (Middleware)</span>
-                    <div className="text-2xl font-black text-red-500">${(cost * 0.9).toFixed(0)} <span className="text-sm font-normal text-slate-400">уходит посредникам</span></div>
-                  </div>
-                  <div className="p-4 bg-green-500/10 rounded-xl border border-green-500/20">
-                    <span className="text-xs uppercase text-green-400 font-bold">С Rialo (Вертикальная интеграция)</span>
-                    <div className="text-2xl font-black text-green-500">${(cost * 0.1).toFixed(0)} <span className="text-sm font-normal text-slate-400">реальные затраты</span></div>
-                  </div>
-                </div>
+    <main className="min-h-screen p-8 flex flex-col items-center justify-center bg-[#FFFBF5]">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-16"
+      >
+        <h1 className="text-5xl md:text-6xl font-black text-slate-900 mb-4">
+          Атриум <span className="text-orange-500">Rialo Academy</span>
+        </h1>
+        <p className="text-slate-500 text-lg max-w-xl mx-auto">
+          Добро пожаловать в цифровой двор будущего. Выбери портал для обучения.
+        </p>
+      </motion.div>
+      
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl w-full">
+        {classes.map((cls) => (
+          <Link href={cls.path} key={cls.id} className="w-full">
+            <motion.div 
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="p-8 bg-white rounded-[2.5rem] border border-slate-200 shadow-xl flex flex-col items-center text-center cursor-pointer hover:border-orange-400 hover:shadow-orange-100 transition-all"
+            >
+              <div className="mb-6 p-4 bg-orange-50 rounded-2xl text-orange-500">
+                <cls.icon size={32} />
               </div>
-            </div>
-
-            <p>
-              Путем объединения оракулов и автоматизации прямо в ядро сети, Rialo устраняет <strong>«трагедию общих ресурсов»</strong>. Это позволяет снизить расходы на инфраструктуру до <strong>90%</strong>.
-            </p>
-          </section>
-        </motion.div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">{cls.title}</h3>
+              <p className="text-xs text-slate-400 uppercase tracking-widest font-bold">{cls.desc}</p>
+            </motion.div>
+          </Link>
+        ))}
       </div>
     </main>
   );

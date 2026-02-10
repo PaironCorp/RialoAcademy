@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Zap, Trophy, CheckCircle, Timer, Activity, FastForward, Gauge, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Zap, CheckCircle, Activity, FastForward, Gauge, Trophy, Unlock } from 'lucide-react';
 import Link from 'next/link';
 import { useAcademy } from "../../context/AcademyContext";
 
@@ -14,7 +14,7 @@ export default function VelocityMission() {
 
   useEffect(() => {
     addLog("[SYSTEM]: Velocity Module Initialized.");
-    addLog("[INFO]: Ready to test Rialo SVM latency (Target: 50ms).");
+    addLog("[INFO]: Systems ready for 50ms latency test.");
     return () => setIsFocused(false);
   }, [setIsFocused, addLog]);
 
@@ -22,9 +22,9 @@ export default function VelocityMission() {
     setStatus("RACING");
     setIsFocused(true);
     setRaceProgress({ eth: 0, sol: 0, rialo: 0 });
-    addLog("[RUNTIME]: Syncing global clock for speed test...");
+    addLog("[RUNTIME]: Syncing Rialo SVM Clock...");
 
-    // RIALO: 50ms (0.05s) - Телепортация
+    // RIALO: 50ms (Мгновенный финиш)
     setTimeout(() => {
         setRaceProgress(prev => ({ ...prev, rialo: 100 }));
         addLog("[RIALO]: Block finalized in 50ms.");
@@ -37,124 +37,162 @@ export default function VelocityMission() {
         addLog("[SOLANA]: Block finalized in 400ms.");
     }, 800);
 
-    // ETHEREUM: Симуляция ожидания
+    // ETHEREUM: Симуляция долгого ожидания
     const ethInterval = setInterval(() => {
         setRaceProgress(prev => {
-            if (prev.eth >= 15 || status === "COOLED") { clearInterval(ethInterval); return prev; }
+            if (prev.eth >= 15 || status === "COOLED") { 
+                clearInterval(ethInterval); 
+                return prev; 
+            }
             return { ...prev, eth: prev.eth + 1 };
         });
     }, 400);
   };
 
+  const handleComplete = () => {
+    // Сохраняем прогресс и XP
+    const currentXp = parseInt(localStorage.getItem("rialo_xp") || "0");
+    localStorage.setItem("rialo_xp", (currentXp + 2000).toString());
+    localStorage.setItem("mission_03_complete", "true");
+    
+    setIsCompleted(true); // Активируем окно успеха
+    addLog("[ACADEMY]: Velocity Mission Verified. +2,000 XP.");
+  };
+
   return (
-    <main className="min-h-screen p-6 md:p-12 lg:pt-32 flex flex-col items-center relative z-10 overflow-hidden transform-gpu">
+    <main className="min-h-screen p-6 md:p-12 lg:pt-32 flex flex-col items-center relative z-10 transform-gpu overflow-hidden">
       
-      {/* ЭФФЕКТ ЛИНИЙ СКОРОСТИ (ЛЕГКИЙ) */}
+      {/* --- SUCCESS MODAL: ВЕДЕТ НА WORKFLOWS --- */}
       <AnimatePresence>
-        {status === "RACING" && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.2 }} exit={{ opacity: 0 }} className="fixed inset-0 pointer-events-none z-0">
-                {[...Array(20)].map((_, i) => (
-                    <motion.div key={i} className="absolute bg-[#A9DDD3] h-[1px]" 
-                        style={{ top: `${Math.random() * 100}%`, left: '-10%', width: `${Math.random() * 20 + 10}%` }}
-                        animate={{ x: ['0vw', '120vw'] }} transition={{ duration: Math.random() * 0.5 + 0.2, repeat: Infinity, ease: "linear" }}
-                    />
-                ))}
+        {isCompleted && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="fixed inset-0 z-[100] bg-[#010101] flex items-center justify-center p-6 text-center"
+          >
+            <motion.div 
+              initial={{ scale: 0.9 }} 
+              animate={{ scale: 1 }} 
+              className="bg-[#050505] border border-[#A9DDD3]/30 p-12 rounded-[3.5rem] max-w-sm shadow-2xl"
+            >
+                <CheckCircle className="text-[#A9DDD3] mx-auto mb-6" size={80} />
+                <h2 className="text-3xl font-black text-[#E8E3D5] italic mb-2 uppercase tracking-tighter">Speed Mastered</h2>
+                <p className="text-[#A9DDD3] font-mono text-[10px] tracking-widest uppercase mb-10 italic font-bold">50ms Threshold Breached</p>
+                
+                {/* ИСПРАВЛЕННЫЙ ПЕРЕХОД: Mission 03 -> Mission 04 */}
+                <Link href="/workflows">
+                    <button className="w-full py-5 bg-[#A9DDD3] text-[#010101] font-black uppercase text-xs tracking-[0.3em] rounded-2xl flex items-center justify-center group hover:bg-white transition-all shadow-xl">
+                        Proceed to Workflows <FastForward className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
+                    </button>
+                </Link>
             </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
+      {/* --- HEADER --- */}
       <div className="max-w-6xl w-full mb-12 flex justify-between items-center relative z-10">
-        <Link href="/"><div className="flex items-center text-[#A9DDD3]/60 hover:text-[#A9DDD3] cursor-pointer font-mono text-xs uppercase tracking-widest"><ArrowLeft className="mr-2" size={14} /> [ Back to Nexus ]</div></Link>
-        <div className="bg-[#A9DDD3]/5 border border-[#A9DDD3]/20 px-6 py-3 rounded-full text-[#E8E3D5] font-mono text-xs uppercase tracking-widest">Mission 03: <span className="text-[#A9DDD3] font-bold">50ms Threshold</span></div>
+        <Link href="/"><div className="flex items-center text-[#A9DDD3]/60 hover:text-[#A9DDD3] cursor-pointer font-mono text-xs uppercase tracking-widest transition-colors"><ArrowLeft className="mr-2" size={14} /> [ Back to Nexus ]</div></Link>
+        <div className="bg-[#050505] border border-[#A9DDD3]/20 px-6 py-3 rounded-full text-[#E8E3D5] font-mono text-xs uppercase tracking-widest shadow-lg">Mission 03: <span className="text-[#A9DDD3] font-bold">Velocity Test</span></div>
       </div>
 
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-3 gap-10 relative z-10">
         <div className="lg:col-span-2 space-y-8">
-            <motion.div layout className="bg-[#050505]/90 border border-white/10 rounded-[3.5rem] p-10 md:p-14 shadow-2xl relative overflow-hidden transition-all duration-700">
-                
+            <div className="bg-[#050505]/95 border border-white/10 rounded-[3.5rem] p-10 md:p-14 shadow-2xl relative overflow-hidden">
                 <h1 className="text-6xl md:text-8xl font-black text-[#E8E3D5] mb-8 tracking-tighter italic uppercase leading-[0.85]">
                    Beyond <br/><span className="text-[#A9DDD3] text-glow-mint">Real-Time</span>
                 </h1>
                 
-                {/* КОНСОЛЬ СРАВНЕНИЯ (КРУПНЫЕ КАРТЫ) */}
+                {/* --- SPEED CARDS: УЛУЧШЕННАЯ ЧИТАЕМОСТЬ --- */}
                 <div className="space-y-6 mb-12">
-                    {/* RIALO - ГЛАВНЫЙ ГЕРОЙ */}
-                    <div className="p-8 bg-[#A9DDD3]/5 border border-[#A9DDD3]/30 rounded-[2.5rem] relative shadow-lg">
+                    {/* RIALO */}
+                    <div className="p-8 bg-[#A9DDD3]/5 border border-[#A9DDD3]/40 rounded-[2.5rem] shadow-lg relative overflow-hidden">
                         <div className="flex justify-between items-center mb-6">
                             <div className="flex items-center space-x-3">
-                                <Zap className="text-[#A9DDD3] animate-pulse" size={24} />
-                                <span className="font-mono text-xs text-[#A9DDD3] uppercase tracking-[0.4em] font-black">Rialo SVM Core [50ms]</span>
+                                <Zap className="text-[#A9DDD3]" size={24} />
+                                <span className="font-mono text-sm text-[#A9DDD3] uppercase tracking-[0.4em] font-black italic">Rialo SVM [50ms]</span>
                             </div>
-                            <span className="font-mono text-xs text-[#A9DDD3] font-bold">{raceProgress.rialo === 100 ? "SYNC_CONFIRMED" : "READY"}</span>
+                            <span className="font-mono text-xs text-[#A9DDD3] font-bold uppercase">{raceProgress.rialo === 100 ? "Finality Achieved" : "Ready"}</span>
                         </div>
                         <div className="h-4 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 p-1">
-                            <motion.div initial={{ width: 0 }} animate={{ width: `${raceProgress.rialo}%` }} transition={{ type: "spring", stiffness: 100 }} className="h-full bg-[#A9DDD3] shadow-[0_0_20px_#A9DDD3] rounded-full" />
+                            <motion.div initial={{ width: 0 }} animate={{ width: `${raceProgress.rialo}%` }} className="h-full bg-[#A9DDD3] shadow-[0_0_20px_#A9DDD3] rounded-full" />
                         </div>
                     </div>
 
-                    {/* COMPETITORS (БОЛЬШЕ И КОНТРАСТНЕЕ) */}
+                    {/* COMPETITORS: КОНТРАСТНЫЕ ЦВЕТА */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="p-6 bg-white/[0.02] border border-white/5 rounded-3xl opacity-60">
-                            <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-4">Solana [400ms]</p>
-                            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                <motion.div animate={{ width: `${raceProgress.sol}%` }} transition={{ duration: 0.8 }} className="h-full bg-white/30" />
+                        <div className="p-6 bg-[#080808] border border-white/5 rounded-3xl opacity-80">
+                            <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-4 font-bold italic">Solana [400ms]</p>
+                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                                <motion.div animate={{ width: `${raceProgress.sol}%` }} className="h-full bg-white/20" />
                             </div>
                         </div>
-                        <div className="p-6 bg-white/[0.02] border border-white/5 rounded-3xl opacity-40">
-                            <p className="font-mono text-[10px] text-white/20 uppercase tracking-widest mb-4">Ethereum [12s]</p>
-                            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div className="p-6 bg-[#080808] border border-white/5 rounded-3xl opacity-60">
+                            <p className="font-mono text-[10px] text-white/20 uppercase tracking-widest mb-4 font-bold italic">Ethereum [12s]</p>
+                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                                 <motion.div animate={{ width: `${raceProgress.eth}%` }} className="h-full bg-red-500/20" />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button onClick={startRace} disabled={status === "RACING"} className={`w-full py-7 rounded-full font-mono text-sm uppercase tracking-[0.6em] transition-all duration-500 border-2 flex items-center justify-center space-x-4 font-black ${status === "RACING" ? 'bg-[#A9DDD3]/10 text-[#A9DDD3] border-[#A9DDD3]/10' : 'bg-transparent text-[#A9DDD3] border-[#A9DDD3]/30 hover:bg-[#A9DDD3] hover:text-[#010101] shadow-xl'}`}>
+                <button 
+                  onClick={startRace} 
+                  disabled={status === "RACING"} 
+                  className={`w-full py-7 rounded-full font-mono text-sm uppercase tracking-[0.6em] border-2 font-black transition-all shadow-2xl
+                  ${status === "RACING" ? 'bg-[#A9DDD3]/10 text-[#A9DDD3] border-[#A9DDD3]/10 cursor-wait' : 'bg-transparent text-[#A9DDD3] border-[#A9DDD3]/30 hover:bg-[#A9DDD3] hover:text-[#010101]'}`}
+                >
                     <Gauge size={20} className={status === "RACING" ? "animate-spin" : ""} />
-                    <span>{status === "RACING" ? "OVERCLOCKING SYSTEM..." : "ENGAGE VELOCITY TEST"}</span>
+                    <span>{status === "RACING" ? "SYNCING HYPER-BLOCKS..." : "ENGAGE VELOCITY TEST"}</span>
                 </button>
 
-                {/* --- АНАЛИТИКА (ЯРЧЕ И БОЛЬШЕ) --- */}
+                {/* --- АНАЛИТИКА: КРУПНЫЙ ТЕКСТ --- */}
                 <AnimatePresence>
                   {status === "COOLED" && (
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-14 pt-14 border-t border-white/10 space-y-10">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }} 
+                      animate={{ opacity: 1, y: 0 }} 
+                      className="mt-14 pt-14 border-t border-white/10 space-y-10"
+                    >
                        <div className="flex items-center space-x-3 text-[#A9DDD3]">
                           <Activity size={28} className="animate-pulse" />
-                          <h3 className="text-sm font-mono uppercase tracking-[0.4em] font-black">Technical Performance Readout</h3>
+                          <h3 className="text-xs font-mono uppercase tracking-[0.4em] font-black italic">Latency Benchmark Results</h3>
                        </div>
                        
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-[#E8E3D5]">
                           <div className="space-y-6">
-                             <p className="text-2xl font-bold italic leading-tight">"Confirmations at the speed of human thought."</p>
-                             <p className="text-base opacity-50 leading-relaxed">Rialo's 50ms finality enables on-chain AI and high-frequency markets that are physically impossible on legacy Rails. It eliminates the 'wait time' from the user experience.</p>
+                             <p className="text-3xl font-bold italic leading-tight">"50ms isn't speed—it's a new dimension of efficiency."</p>
+                             <p className="text-base text-white/40 leading-relaxed italic">Rialo's sub-second finality enables on-chain high-frequency trading and real-time AI agents that are technically impossible on legacy rails.</p>
                           </div>
                           <div className="p-10 bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 rounded-[3rem] flex flex-col justify-center text-center shadow-inner">
-                                <p className="text-[11px] font-mono text-[#A9DDD3] uppercase mb-3 tracking-widest font-black opacity-60">Global Latency Rank</p>
+                                <p className="text-[11px] font-mono text-[#A9DDD3] uppercase mb-2 tracking-widest font-black opacity-60 italic">Global Speed Rank</p>
                                 <p className="text-7xl font-black text-[#A9DDD3] text-glow-mint italic tracking-tighter">TIER-0</p>
-                                <p className="text-xs opacity-30 mt-6 italic font-mono uppercase">Validated by Sovereign SVM Runtime</p>
+                                <p className="text-[10px] opacity-30 mt-6 italic font-mono uppercase tracking-widest">Validated by Sovereign SVM Runtime</p>
                           </div>
                        </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-            </motion.div>
+            </div>
         </div>
 
-        {/* SIDEBAR */}
+        {/* --- SIDEBAR --- */}
         <div className="space-y-6">
             <div className="bg-[#050505] border border-white/10 rounded-[3rem] p-10 shadow-2xl">
-                <div className="flex items-center space-x-3 mb-10"><Trophy className="text-[#A9DDD3]" size={20} /><h3 className="text-[#E8E3D5] font-black tracking-widest uppercase text-xs">Mission Rewards</h3></div>
-                <div className="space-y-6 mb-12">
-                    <div className={`p-6 rounded-3xl border transition-all ${status === 'COOLED' ? 'bg-[#A9DDD3]/5 border-[#A9DDD3]/20' : 'bg-white/5 border-white/5 opacity-30'}`}>
-                        <span className="text-[10px] font-mono text-[#A9DDD3]/60 uppercase block mb-2 tracking-widest">Experience Points</span>
-                        <div className="flex items-center justify-between">
-                            <span className="text-2xl font-black text-[#A9DDD3]">+2,000 XP</span>
-                            <Zap size={20} className={status === 'COOLED' ? 'text-[#A9DDD3] animate-pulse' : 'text-white/20'} />
-                        </div>
-                    </div>
+                <div className="flex items-center space-x-3 mb-10 text-[#A9DDD3]"><Trophy size={20} /><h3 className="text-white font-black tracking-widest uppercase text-xs italic">Mission Loot</h3></div>
+                
+                <div className="p-6 bg-[#080808] border border-white/5 rounded-3xl mb-12">
+                    <span className="text-[10px] font-mono text-[#A9DDD3]/60 uppercase block mb-2 tracking-widest italic">Experience Points</span>
+                    <span className="text-2xl font-black text-white">+2,000 XP</span>
                 </div>
-                <button onClick={() => setIsCompleted(true)} disabled={status !== "COOLED"} className={`w-full py-6 font-black uppercase text-xs tracking-[0.4em] rounded-2xl transition-all flex items-center justify-center space-x-2 ${status === 'COOLED' ? 'bg-[#A9DDD3] text-[#010101] hover:bg-white shadow-[0_0_30px_rgba(169,221,211,0.2)]' : 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'}`}>
-                    {status === 'COOLED' ? <><CheckCircle size={14} /> <span>COMPLETE MISSION</span></> : <span>SYSTEM COOLING...</span>}
+
+                <button 
+                  onClick={handleComplete} 
+                  disabled={status !== "COOLED"} 
+                  className={`w-full py-6 font-black uppercase text-xs tracking-[0.4em] rounded-2xl transition-all flex items-center justify-center space-x-2
+                  ${status === 'COOLED' ? 'bg-[#A9DDD3] text-[#010101] hover:bg-white shadow-[0_0_30px_rgba(169,221,211,0.3)]' : 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'}`}
+                >
+                    {status === 'COOLED' ? <><Unlock size={14} /> <span>COMPLETE MISSION</span></> : <span>SYSTEM COOLING...</span>}
                 </button>
             </div>
         </div>

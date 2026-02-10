@@ -4,8 +4,8 @@ import "./globals.css";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion"; // Исправлено: добавлен импорт motion
-import { Cpu, Wifi } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Cpu } from "lucide-react";
 import NexusBackground from "../components/NexusBackground";
 import { AcademyProvider, useAcademy } from "../context/AcademyContext";
 
@@ -13,9 +13,8 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
   const pathname = usePathname();
-  const { isFocused } = useAcademy(); // Получаем состояние "фокуса" для аватара
+  const { isFocused } = useAcademy();
 
-  // Синхронизация прогресса из памяти браузера
   useEffect(() => {
     const savedXp = localStorage.getItem("rialo_xp") || "0";
     const totalXp = parseInt(savedXp);
@@ -23,22 +22,19 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
     setLevel(Math.floor(totalXp / 2000) + 1);
   }, [pathname]);
 
-  const progress = (xp % 2000) / 20;
-
-  // Реплики агента в зависимости от страницы
   const getAgentMessage = () => {
-    if (pathname === "/") return "Welcome to the Nexus. I am your guide through the Rialo architecture.";
-    if (pathname === "/economics") return "Observe the middleware drain. Rialo is the only solution for capital efficiency.";
-    if (pathname === "/edge") return "Data packets are flowing. We are now connected to the real world natively.";
-    return "Stay focused on the integration, Initiate.";
+    if (pathname === "/") return "Welcome back, Initiate. Select a portal to continue your neural integration.";
+    if (pathname === "/economics") return "Double marginalization is the cancer of Web3. Rialo is the cure.";
+    if (pathname === "/edge") return "The world is no longer blind. Data is flowing through our native sensors.";
+    return "Stay focused, Initiate.";
   };
+
+  const progress = (xp % 2000) / 20;
 
   return (
     <body className="antialiased bg-[#010101] text-[#E8E3D5] selection:bg-[#A9DDD3] selection:text-[#010101]">
-      {/* Живой фон Rialo */}
       <div className="fixed inset-0 z-0"><NexusBackground /></div>
       
-      {/* Глобальный Header с уровнем EXP */}
       <header className="fixed top-0 left-0 right-0 z-40 h-20 flex items-center justify-between px-8 bg-[#010101]/60 backdrop-blur-xl border-b border-[#A9DDD3]/10">
           <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-3">
@@ -49,8 +45,6 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
                       RIALO <span className="text-[#E8E3D5] font-thin">ACADEMY</span>
                   </span>
               </div>
-
-              {/* Neural Rank Bar */}
               <div className="hidden md:flex items-center space-x-4 border-l border-white/10 pl-6">
                   <div className="flex flex-col">
                       <span className="text-[9px] font-mono text-[#A9DDD3]/50 uppercase tracking-widest">Neural Rank</span>
@@ -67,44 +61,34 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
           </div>
       </header>
 
-      {/* Основной контент */}
       <div className="relative z-10 pt-20">{children}</div>
 
-      {/* --- ДИНАМИЧЕСКИЙ АГЕНТ-ИИ (С анимацией приближения) --- */}
+      {/* --- DYNAMIC AGENT WITH SMART OVERLAY FIX --- */}
       <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
            <AnimatePresence mode="wait">
-               <motion.div 
-                 key={pathname + isFocused}
-                 initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
-                 className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative"
-               >
-                  <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-2 tracking-widest italic">AI Guide // Analysis</p>
-                  <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium">
-                     "{getAgentMessage()}"
-                  </p>
-               </motion.div>
+               {/* Окно исчезает, если Агент в фокусе (активен мост) */}
+               {!isFocused && (
+                   <motion.div 
+                     key={pathname}
+                     initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
+                     className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative"
+                   >
+                      <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-2 tracking-widest italic">AI Guide // Analysis</p>
+                      <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium">"{getAgentMessage()}"</p>
+                   </motion.div>
+               )}
            </AnimatePresence>
 
           <motion.div 
             animate={{ 
               y: [0, -8, 0],
-              scale: isFocused ? 1.4 : 1, // Приближение к пользователю
-              x: isFocused ? -80 : 0,    // Смещение для акцента
+              scale: isFocused ? 1.4 : 1,
+              x: isFocused ? -80 : 0,
             }}
-            transition={{ 
-              y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-              scale: { type: "spring", stiffness: 100 }
-            }}
+            transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" }, scale: { type: "spring", stiffness: 100 } }}
             className="relative w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_0_30px_rgba(169,221,211,0.3)]"
           >
-              <Image 
-                src="/avatar.png" 
-                alt="Rialo AI Guide" 
-                width={176} 
-                height={176} 
-                className="object-contain" 
-                priority 
-              />
+              <Image src="/avatar.png" alt="Rialo AI" width={176} height={176} className="object-contain" priority />
           </motion.div>
       </div>
     </body>

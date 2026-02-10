@@ -1,125 +1,51 @@
 "use client";
 
-import "./globals.css";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Cpu, Terminal as TerminalIcon } from "lucide-react";
-import NexusBackground from "../components/NexusBackground";
-import { AcademyProvider, useAcademy } from "../context/AcademyContext";
+import React from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users } from 'lucide-react';
 
-// Внутренняя обертка интерфейса
-function GlobalUI({ children }: { children: React.ReactNode }) {
-  const [xp, setXp] = useState(0);
-  const [level, setLevel] = useState(1);
-  const pathname = usePathname();
-  const { isFocused, logs } = useAcademy(); // Теперь терминал видит логи!
-
-  useEffect(() => {
-    const savedXp = localStorage.getItem("rialo_xp") || "0";
-    const totalXp = parseInt(savedXp);
-    setXp(totalXp);
-    setLevel(Math.floor(totalXp / 2000) + 1);
-  }, [pathname]);
-
-  const progress = (xp % 2000) / 20;
-
-  const getAgentMessage = () => {
-    if (pathname === "/") return "Welcome back. Select a portal to continue your neural integration.";
-    if (pathname === "/economics") return "Analyze the capital flow. Rialo eliminates the hidden taxes.";
-    if (pathname === "/edge") return isFocused ? "System synchronized. Data flowing natively." : "Initialize the Bridge.";
-    if (pathname === "/velocity") return isFocused ? "50ms Threshold breached." : "Engage the Velocity Test.";
-    if (pathname === "/privacy") return isFocused ? "REX Computation active. Proof verified." : "Initialize the REX Shield.";
-    // ... (внутри функции getAgentMessage в GlobalUI)
-if (pathname === "/ai-agents") return isFocused ? "Neural pathways synced. The agent is now executing sovereign logic." : "Wallets for machines. Rialo allows AI to act as sovereign citizens.";
-if (pathname === "/network") return "The integration is almost complete. You are becoming part of the global collective.";
-    return "Stay focused, Initiate.";
-  };
+export default function RialoNexusAtrium() {
+  const modules = [
+    { id: 1, title: "ECONOMICS", tagline: "VERTICAL INTEGRATION", desc: "How Rialo captures value by merging L1 core with native dApp services.", path: "/economics", icon: Coins, active: true },
+    { id: 2, title: "RIALO EDGE", tagline: "NATIVE CONNECTIVITY", desc: "Technical breakdown of native HTTPS oracles baked into consensus.", path: "/edge", icon: Globe, active: true },
+    { id: 3, title: "VELOCITY", tagline: "50MS FINALITY", desc: "The science behind parallel execution and ultra-fast block times.", path: "/velocity", icon: Zap, active: true },
+    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Moving from reactive smart contracts to proactive autonomous workflows.", path: "/workflows", icon: Cog, active: true },
+    { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Understanding Zero-Knowledge proofs in an encrypted runtime environment.", path: "/privacy", icon: ShieldAlert, active: true },
+    { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "Deep dive into the SVM architecture and high-performance Rust contracts.", path: "/developers", icon: Code2, active: true }, // ТЕПЕРЬ АКТИВНО
+    { id: 7, title: "AI AGENTS", tagline: "MACHINE ECONOMY", desc: "Sovereign AI: Agents with wallets, agency, and financial independence.", path: "/ai-agents", icon: Bot, active: true },
+    { id: 8, title: "NETWORK", tagline: "THE COLLECTIVE", desc: "Global node distribution and the future of decentralized coordination.", path: "/network", icon: Users, active: true },
+  ];
 
   return (
-    <body className="antialiased bg-[#010101] text-[#E8E3D5] selection:bg-[#A9DDD3] selection:text-[#010101] overflow-x-hidden">
-      <div className="fixed inset-0 z-0"><NexusBackground /></div>
+    <main className="min-h-screen flex flex-col items-center justify-center p-6 py-20 overflow-hidden">
+      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16 relative z-10">
+        <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 text-[#E8E3D5] uppercase italic leading-none">
+          RIALO <span className="text-[#A9DDD3] text-glow-mint">ACADEMY</span>
+        </h1>
+        <p className="font-mono text-[10px] tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Advanced Protocol Learning v2.0</p>
+      </motion.div>
       
-      {/* --- HEADER --- */}
-      <header className="fixed top-0 left-0 right-0 z-40 h-20 flex items-center justify-between px-8 bg-[#010101]/60 backdrop-blur-xl border-b border-[#A9DDD3]/10">
-          <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-[#A9DDD3]/10 rounded-lg border border-[#A9DDD3]/30 text-[#A9DDD3]"><Cpu size={22} /></div>
-                  <span className="text-xl font-black tracking-tighter text-[#A9DDD3] italic">RIALO <span className="text-[#E8E3D5] font-thin">ACADEMY</span></span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full relative z-10">
+        {modules.map((mod, index) => (
+          <Link href={mod.path} key={mod.id}>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              transition={{ delay: index * 0.04 }}
+              whileHover={{ y: -5, borderColor: '#A9DDD3', backgroundColor: 'rgba(169, 221, 211, 0.05)' }}
+              className="h-full bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-[2rem] p-8 flex flex-col items-start justify-between transition-all duration-300"
+            >
+              <div className="p-3 bg-[#A9DDD3]/10 text-[#A9DDD3] rounded-xl mb-8"><mod.icon size={24} /></div>
+              <div>
+                <p className="text-[9px] font-mono tracking-widest text-[#A9DDD3] mb-2 uppercase font-bold">{mod.tagline}</p>
+                <h3 className="text-xl font-bold text-[#E8E3D5] mb-3">{mod.title}</h3>
+                <p className="text-xs text-[#E8E3D5]/40 leading-relaxed italic">{mod.desc}</p>
               </div>
-              <div className="hidden md:flex items-center space-x-4 border-l border-white/10 pl-6">
-                  <div className="flex flex-col">
-                      <span className="text-[9px] font-mono text-[#A9DDD3]/50 uppercase tracking-widest">Neural Rank</span>
-                      <span className="text-xs font-bold text-[#E8E3D5] uppercase">Lvl {level}</span>
-                  </div>
-                  <div className="w-32 h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
-                      <motion.div animate={{ width: `${progress}%` }} className="h-full bg-[#A9DDD3] shadow-[0_0_10px_#A9DDD3]" />
-                  </div>
-              </div>
-          </div>
-          <div className="font-mono text-[10px] text-[#A9DDD3]/40 tracking-[0.3em] uppercase">SYNC_STATUS: ENCRYPTED</div>
-      </header>
-
-      {/* --- CONTENT --- */}
-      <div className="relative z-10 pt-20 pb-40">{children}</div>
-
-      {/* --- LIVE NEURAL TERMINAL --- */}
-      <div className="fixed bottom-0 left-0 right-0 z-[100] h-32 bg-[#010101]/90 backdrop-blur-2xl border-t border-[#A9DDD3]/20 p-5 font-mono shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
-          <div className="max-w-7xl mx-auto flex items-start space-x-8">
-              <div className="flex items-center space-x-2 text-[#A9DDD3] opacity-50 shrink-0">
-                  <TerminalIcon size={14} className="animate-pulse" />
-                  <span className="text-[10px] uppercase tracking-widest font-black">Live Node Logs</span>
-              </div>
-              <div className="flex-1 h-20 space-y-1.5 overflow-hidden">
-                  <AnimatePresence initial={false}>
-                      {logs.map((log: string, i: number) => (
-                          <motion.p 
-                            key={log + i} 
-                            initial={{ opacity: 0, x: -10 }} 
-                            animate={{ opacity: 1 - i * 0.2, x: 0 }} 
-                            className="text-[10px] text-[#A9DDD3] leading-none tracking-tight font-medium"
-                          >
-                            {log}
-                          </motion.p>
-                      ))}
-                  </AnimatePresence>
-              </div>
-          </div>
+            </motion.div>
+          </Link>
+        ))}
       </div>
-
-      {/* --- AGENT (MOVED UP ABOVE TERMINAL) --- */}
-      <div className="fixed bottom-36 right-8 z-50 flex items-end space-x-4 pointer-events-none">
-          <AnimatePresence mode="wait">
-              <motion.div 
-                key={getAgentMessage()}
-                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-                className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative border border-[#A9DDD3]/20 bg-[#010101]/80 backdrop-blur-md shadow-2xl"
-              >
-                <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-1 tracking-widest italic font-bold">AI Mentor</p>
-                <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"{getAgentMessage()}"</p>
-              </motion.div>
-          </AnimatePresence>
-
-          <motion.div 
-            animate={{ y: [0, -8, 0], scale: isFocused ? 1.1 : 1 }}
-            transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
-            className="relative w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_0_40px_rgba(169,221,211,0.2)]"
-          >
-              <Image src="/avatar.png" alt="Rialo Mentor" width={176} height={176} className="object-contain" priority />
-          </motion.div>
-      </div>
-    </body>
-  );
-}
-
-// Финальный экспорт RootLayout для Next.js
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <AcademyProvider>
-        <GlobalUI>{children}</GlobalUI>
-      </AcademyProvider>
-    </html>
+    </main>
   );
 }

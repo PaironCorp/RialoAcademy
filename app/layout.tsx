@@ -22,6 +22,19 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
     setLevel(Math.floor(totalXp / 2000) + 1);
   }, [pathname]);
 
+  // ДИНАМИЧЕСКИЕ ИНСТРУКЦИИ
+  const getAgentMessage = () => {
+    if (pathname === "/") return "Welcome back. Select a portal to continue your neural integration.";
+    if (pathname === "/economics") return "Analyze the data. See how vertical integration prevents capital leakage.";
+    if (pathname === "/edge") {
+        // Если мост не активен (isFocused = false), просим включить его
+        return isFocused 
+          ? "System synchronized. Observe the native data flow from Web2 sources." 
+          : "Mission Critical: You must initialize the Native Bridge to observe the technology in action.";
+    }
+    return "Focus on the objective, Initiate.";
+  };
+
   const progress = (xp % 2000) / 20;
 
   return (
@@ -51,21 +64,24 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 
       <div className="relative z-10 pt-20">{children}</div>
 
-      {/* --- MENTOR DYNAMICS (Targeting your red arrow position) --- */}
+      {/* --- MENTOR DYNAMICS --- */}
       <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
-          <AnimatePresence>
-            {!isFocused && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative">
-                <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"Mission parameters initialized. Ready for neural link."</p>
+          <AnimatePresence mode="wait">
+              <motion.div 
+                key={getAgentMessage()} // Перерисовываем бабл при смене сообщения
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+                className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative"
+              >
+                <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-2 tracking-widest italic">AI Mentor // Voice</p>
+                <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"{getAgentMessage()}"</p>
               </motion.div>
-            )}
           </AnimatePresence>
 
           <motion.div 
             animate={{ 
-              y: isFocused ? -220 : [0, -8, 0], 
-              x: isFocused ? -420 : 0,           
-              scale: isFocused ? 1.15 : 1, // Деликатное увеличение, не перекрывает текст
+                y: isFocused ? -220 : [0, -8, 0], 
+                x: isFocused ? -420 : 0,           
+                scale: isFocused ? 1.15 : 1,
             }}
             transition={{ 
               y: isFocused ? { type: "spring", stiffness: 80 } : { duration: 4, repeat: Infinity, ease: "easeInOut" },

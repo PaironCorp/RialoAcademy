@@ -63,10 +63,9 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 
       <div className="relative z-10 pt-20">{children}</div>
 
-      {/* --- DYNAMIC AGENT WITH SMART OVERLAY FIX --- */}
+      {/* --- DYNAMIC AGENT --- */}
       <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
            <AnimatePresence mode="wait">
-               {/* Окно исчезает, если Агент в фокусе (активен мост) */}
                {!isFocused && (
                    <motion.div 
                      key={pathname}
@@ -82,11 +81,11 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
           <motion.div 
             animate={{ 
               y: [0, -8, 0],
-              scale: isFocused ? 1.4 : 1,
-              x: isFocused ? -80 : 0,
+              scale: isFocused ? 1.15 : 1, // Уменьшено увеличение (было 1.4)
+              x: isFocused ? -30 : 0,      // Уменьшен сдвиг влево (было -80)
             }}
-            transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" }, scale: { type: "spring", stiffness: 100 } }}
-            className="relative w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_0_30px_rgba(169,221,211,0.3)]"
+            transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" }, scale: { type: "spring", stiffness: 120, damping: 20 } }}
+            className="relative w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_0_30px_rgba(169,221,211,0.3)] origin-bottom-right"
           >
               <Image src="/avatar.png" alt="Rialo AI" width={176} height={176} className="object-contain" priority />
           </motion.div>

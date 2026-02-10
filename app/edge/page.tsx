@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Globe, Zap, Trophy, Cpu, CheckCircle, Award, Activity, Sparkles, Wifi } from 'lucide-react';
+import { ArrowLeft, Globe, Trophy, Cpu, CheckCircle, Activity, Wifi } from 'lucide-react';
 import Link from 'next/link';
 import { useAcademy } from "../../context/AcademyContext";
 
@@ -63,7 +63,6 @@ export default function RialoEdgeMission() {
                     <p>Traditional blockchains are blind. Rialo Edge integrates HTTPS-bridges natively, eliminating 3rd-party latency.</p>
                 </div>
 
-                {/* --- MAGICAL DATA BRIDGE VISUALIZER --- */}
                 <div className="mt-16 bg-white/[0.02] border border-white/5 rounded-[3rem] p-12 text-center relative overflow-hidden shadow-inner">
                     <div className="flex justify-around items-center mb-16 relative z-10">
                         <div className="flex flex-col items-center">
@@ -77,7 +76,6 @@ export default function RialoEdgeMission() {
                                     {isBridgeActive && (
                                         <>
                                             <motion.div initial={{ width: 0 }} animate={{ width: "100%" }} className="absolute inset-0 bg-[#A9DDD3]/40 shadow-[0_0_15px_#A9DDD3]" />
-                                            {/* ЯРКИЕ ПАКЕТЫ ДАННЫХ */}
                                             {[...Array(6)].map((_, i) => (
                                                 <motion.div
                                                     key={i}
@@ -117,11 +115,23 @@ export default function RialoEdgeMission() {
         </div>
       </div>
 
+      {/* --- LIVE AGENT SPEECH OVERLAY (УЛУЧШЕННАЯ ЧИТАЕМОСТЬ) --- */}
       <AnimatePresence>
         {isBridgeActive && (
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="fixed bottom-40 right-48 z-[60] p-6 bg-[#010101]/90 backdrop-blur-xl border-l-4 border-[#A9DDD3] rounded-r-2xl max-w-[240px] shadow-2xl pointer-events-none">
-             <div className="flex items-center space-x-2 mb-3"><Wifi size={14} className="text-[#A9DDD3] animate-pulse" /><span className="text-[9px] font-mono text-[#A9DDD3] uppercase tracking-widest">Neural Feed Active</span></div>
-             <p className="text-xs text-[#E8E3D5] leading-relaxed italic font-medium">"Detecting native HTTPS packets. Latency: <span className="text-[#A9DDD3] font-bold">12ms</span>. We've bypassed the Oracle Tax, Initiate."</p>
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
+            // Увеличена ширина (max-w-[280px]) и изменена позиция (bottom-44 right-40)
+            className="fixed bottom-44 right-40 z-[60] p-6 bg-[#010101]/95 backdrop-blur-xl border-l-4 border-[#A9DDD3] rounded-r-2xl max-w-[280px] shadow-2xl pointer-events-none"
+          >
+             <div className="flex items-center space-x-2 mb-3">
+                <Wifi size={16} className="text-[#A9DDD3] animate-pulse" />
+                {/* Увеличен шрифт заголовка */}
+                <span className="text-[10px] font-mono text-[#A9DDD3] uppercase tracking-widest">Neural Feed Active</span>
+             </div>
+             {/* Увеличен основной шрифт (text-sm) */}
+             <p className="text-sm text-[#E8E3D5] leading-relaxed italic font-medium">
+                "Detecting native HTTPS packets. Latency confirmed at <span className="text-[#A9DDD3] font-bold">12ms</span>. We have successfully bypassed the Oracle Tax, Initiate."
+             </p>
           </motion.div>
         )}
       </AnimatePresence>

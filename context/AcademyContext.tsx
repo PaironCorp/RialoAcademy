@@ -8,7 +8,7 @@ export const AcademyProvider = ({ children }: { children: React.ReactNode }) => 
   const [logs, setLogs] = useState<string[]>(["[SYSTEM]: Neural Link Established", "[CORE]: SVM Runtime Active"]);
 
   const addLog = (msg: string) => {
-    const timestamp = new Date().toLocaleTimeString();
+    const timestamp = new Date().toLocaleTimeString('en-GB', { hour12: false });
     setLogs(prev => [`[${timestamp}] ${msg}`, ...prev].slice(0, 5));
   };
 

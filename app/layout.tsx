@@ -24,15 +24,13 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 
   const progress = (xp % 2000) / 20;
 
-  // Динамические инструкции для обучения
   const getAgentMessage = () => {
     if (pathname === "/") return "Welcome back. Select a portal to continue your neural integration.";
-    if (pathname === "/economics") return "Analyze the capital flow. Rialo's stack eliminates the middleware tax.";
-    if (pathname === "/edge") {
-        return isFocused 
-          ? "System synchronized. Data is now flowing natively through the L1 core." 
-          : "Initialize the Bridge to witness the magic of native connectivity.";
-    }
+    if (pathname === "/economics") return "Observe the middleware drain. Rialo's stack eliminates the hidden taxes.";
+    if (pathname === "/edge") return isFocused ? "System synchronized. Data is flowing through the L1 core." : "Initialize the Bridge to witness native connectivity.";
+    if (pathname === "/velocity") return isFocused ? "50ms Threshold breached. This is the speed of global internet." : "Engage the Velocity Test to break the speed barrier.";
+    if (pathname === "/workflows") return isFocused ? "Autonomous logic confirmed. Code that triggers itself." : "Deploy the workflow to see Rialo's autonomous engine.";
+    if (pathname === "/privacy") return isFocused ? "REX Computation active. The validators see the proof, never the data." : "Privacy is a human right. Initialize the REX Shield."; // НОВАЯ РЕПЛИКА
     return "Stay focused on the mission, Initiate.";
   };
 
@@ -63,7 +61,6 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 
       <div className="relative z-10 pt-20">{children}</div>
 
-      {/* --- MENTOR (STABLE UI) --- */}
       <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
           <AnimatePresence mode="wait">
               <motion.div 
@@ -71,16 +68,13 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                 className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative"
               >
-                <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-1 tracking-widest italic">AI Mentor // Status</p>
+                <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-1 tracking-widest italic">AI Mentor // Voice</p>
                 <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"{getAgentMessage()}"</p>
               </motion.div>
           </AnimatePresence>
 
           <motion.div 
-            animate={{ 
-                y: [0, -8, 0],
-                scale: isFocused ? 1.1 : 1, // Деликатное увеличение вместо полета
-            }}
+            animate={{ y: [0, -8, 0], scale: isFocused ? 1.1 : 1 }}
             transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
             className="relative w-32 h-32 md:w-44 md:h-44 drop-shadow-[0_0_40px_rgba(169,221,211,0.2)]"
           >

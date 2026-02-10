@@ -10,8 +10,8 @@ export default function RialoNexusAtrium() {
     { id: 1, title: "ECONOMICS", tagline: "VERTICAL INTEGRATION", desc: "Solving Double Marginalization via full-stack architecture.", path: "/economics", icon: Coins, active: true },
     { id: 2, title: "RIALO EDGE", tagline: "NATIVE CONNECTIVITY", desc: "Low-latency HTTPS bridges for direct Web2 data feeds.", path: "/edge", icon: Globe, active: true },
     { id: 3, title: "VELOCITY", tagline: "ULTRA-FAST BLOCKS", desc: "50ms block times designed for global internet-scale.", path: "/velocity", icon: Zap, active: true },
-    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Event-driven smart contracts acting without keepers.", path: "/workflows", icon: Cog, active: true }, // ТЕПЕРЬ АКТИВНО
-    { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Zero-knowledge verification for confidential logic.", path: "#", icon: ShieldAlert },
+    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Event-driven smart contracts acting natively.", path: "/workflows", icon: Cog, active: true },
+    { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Zero-knowledge verification for confidential execution logic.", path: "/privacy", icon: ShieldAlert, active: true }, // ТЕПЕРЬ АКТИВНО
     { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "The ultimate habitat for advanced SVM builders.", path: "#", icon: Code2 },
     { id: 7, title: "AI AGENTS", tagline: "MACHINE ECONOMY", desc: "Sovereign infrastructure for autonomous AI.", path: "#", icon: Bot },
     { id: 8, title: "NETWORK", tagline: "THE COLLECTIVE", desc: "Join the ecosystem and shape the future.", path: "#", icon: Users },
@@ -23,18 +23,18 @@ export default function RialoNexusAtrium() {
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-[#E8E3D5] uppercase italic">
           RIALO <span className="text-[#A9DDD3] text-glow-mint">NEXUS</span>
         </h1>
-        <p className="font-mono text-[10px] md:text-xs tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Initialize Learning Sequence v1.4</p>
+        <p className="font-mono text-[10px] md:text-xs tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Initialize Learning Sequence v1.5</p>
       </motion.div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full">
         {modules.map((mod, index) => (
-          <Link href={mod.path} key={mod.id} className="group cursor-pointer">
+          <Link href={mod.path} key={mod.id} className={`group ${mod.active ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }} 
               animate={{ opacity: 1, scale: 1 }} 
               transition={{ delay: index * 0.05 }}
-              whileHover={{ y: -8, borderColor: mod.active ? '#A9DDD3' : '' }}
-              className={`h-full bg-white/[0.02] backdrop-blur-xl border ${mod.active ? 'border-[#A9DDD3]/30 shadow-[0_0_20px_rgba(169,221,211,0.1)]' : 'border-white/10 opacity-60'} rounded-[2.5rem] p-8 flex flex-col items-start justify-between transition-all duration-500`}
+              whileHover={mod.active ? { y: -8, borderColor: '#A9DDD3' } : {}}
+              className={`h-full bg-white/[0.02] backdrop-blur-xl border ${mod.active ? 'border-[#A9DDD3]/30 shadow-[0_0_20px_rgba(169,221,211,0.1)]' : 'border-white/10 opacity-40'} rounded-[2.5rem] p-8 flex flex-col items-start justify-between transition-all duration-500`}
             >
               <div className={`p-4 rounded-2xl ${mod.active ? 'bg-[#A9DDD3]/10 text-[#A9DDD3]' : 'bg-white/5 text-white/20'} mb-10`}>
                 <mod.icon size={28} />

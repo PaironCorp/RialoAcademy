@@ -2,47 +2,42 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Globe, Star, Users, Zap, ShieldCheck, CheckCircle, FastForward } from 'lucide-react';
+import { ArrowLeft, Globe, Star, Users, Zap, ShieldCheck, CheckCircle, FastForward, Award } from 'lucide-react';
 import Link from 'next/link';
 import { useAcademy } from "../../context/AcademyContext";
 
 export default function NetworkAcademy() {
   const { addLog, setIsFocused } = useAcademy();
   const [isFinalized, setIsFinalized] = useState(false);
-  const [xp, setXp] = useState(0);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
-    // Подгружаем текущий XP
-    const savedXp = typeof window !== "undefined" ? localStorage.getItem("rialo_xp") || "0" : "0";
-    setXp(parseInt(savedXp));
-    
-    addLog("[NETWORK]: Syncing global node state...");
-    addLog("[SYSTEM]: Finalizing Academy Integration sequence.");
-    
+    addLog("[NETWORK]: Global node synchronization initiated...");
+    addLog("[SYSTEM]: Finalizing Academy integration sequence."); 
     return () => setIsFocused(false);
   }, [addLog, setIsFocused]);
 
   const handleFinalize = () => {
+    setIsSyncing(true);
     setIsFocused(true);
-    addLog("[SYSTEM]: Finalizing Architect Path...");
+    addLog("[SYSTEM]: Synchronizing neural weights with the Nexus...");
     
-    // Имитация финальной загрузки
+    // Имитация финальной записи в блокчейн
     setTimeout(() => {
-      // Добавляем огромный бонус за прохождение всей академии
-      const totalXp = xp + 10000;
-      localStorage.setItem("rialo_xp", totalXp.toString());
+      const currentXp = parseInt(localStorage.getItem("rialo_xp") || "0");
+      localStorage.setItem("rialo_xp", (currentXp + 5000).toString());
       localStorage.setItem("academy_complete", "true");
       
-      setIsFinalized(true); // Открываем финальное окно
-      addLog("[NETWORK]: Sovereign Nexus Synchronization: 100%");
-      addLog("[ACADEMY]: CONGRATULATIONS! Architect Status Achieved.");
-    }, 1500);
+      setIsSyncing(false);
+      setIsFinalized(true);
+      addLog("[NETWORK]: Integration 100%. Architect Status: VERIFIED.");
+    }, 2500);
   };
 
   return (
     <main className="min-h-screen p-6 md:p-12 lg:pt-32 flex flex-col items-center relative z-10 transform-gpu overflow-hidden">
       
-      {/* --- FINAL SUCCESS MODAL: ЗАВЕРШЕНИЕ ВСЕГО ПУТИ --- */}
+      {/* --- FINAL SUCCESS MODAL: СТАТУС АРХИТЕКТОРА --- */}
       <AnimatePresence>
         {isFinalized && (
           <motion.div 
@@ -55,11 +50,11 @@ export default function NetworkAcademy() {
               animate={{ scale: 1, y: 0 }} 
               className="max-w-md p-12 bg-[#050505] border border-[#A9DDD3]/30 rounded-[4rem] shadow-[0_0_100px_rgba(169,221,211,0.2)]"
             >
-                <Star className="text-[#A9DDD3] mx-auto mb-8 animate-pulse" size={100} />
+                <Award className="text-[#A9DDD3] mx-auto mb-8 animate-bounce" size={100} />
                 <h2 className="text-4xl md:text-5xl font-black text-[#E8E3D5] italic mb-4 uppercase tracking-tighter leading-none">
                   Architect <br/><span className="text-[#A9DDD3]">Verified</span>
                 </h2>
-                <p className="text-[#A9DDD3] font-mono text-[10px] tracking-[0.4em] uppercase mb-12 italic font-bold">Neural Integration Complete</p>
+                <p className="text-[#A9DDD3] font-mono text-[10px] tracking-[0.4em] uppercase mb-12 italic font-bold">Nexus Integration Complete</p>
                 
                 <Link href="/">
                     <button className="w-full py-6 bg-[#A9DDD3] text-[#010101] font-black uppercase text-xs tracking-[0.4em] rounded-2xl hover:bg-white transition-all shadow-2xl">
@@ -86,17 +81,17 @@ export default function NetworkAcademy() {
                 The <span className="text-[#A9DDD3] text-glow-mint">Nexus</span> <br/>is Ready
               </h1>
               <p className="text-xl md:text-2xl text-[#E8E3D5]/50 max-w-3xl mx-auto italic font-medium leading-relaxed">
-                  Rialo is not just a blockchain; it's the decentralized operating system for the AI-driven future. 
-                  You have mastered the stack.
+                  Rialo is the decentralized operating system for the AI-driven future. 
+                  You have mastered the Sovereign Stack.
               </p>
           </motion.div>
 
-          {/* STATS CARDS: Оптимизированы для скорости */}
+          {/* STATS CARDS: ГЛАВНЫЕ ТЕХНОЛОГИИ */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { icon: Zap, label: "Latency", value: "50ms" },
+                { icon: Zap, label: "Finality", value: "50ms" },
                 { icon: ShieldCheck, label: "Security", value: "ZK-REX" },
-                { icon: Users, label: "Agency", value: "Sovereign AI" }
+                { icon: Users, label: "Economy", value: "Sovereign AI" }
               ].map((item, i) => (
                 <motion.div 
                   key={i} 
@@ -112,13 +107,15 @@ export default function NetworkAcademy() {
               ))}
           </div>
 
-          {/* FINAL BUTTON */}
+          {/* FINAL ACTION BUTTON */}
           <div className="pt-10">
             <button 
               onClick={handleFinalize} 
-              className="px-16 py-8 bg-[#A9DDD3] text-[#010101] font-black uppercase text-sm tracking-[0.5em] rounded-full shadow-[0_0_60px_rgba(169,221,211,0.3)] hover:scale-105 transition-all active:scale-95"
+              disabled={isSyncing}
+              className={`px-16 py-8 font-black uppercase text-sm tracking-[0.5em] rounded-full shadow-[0_0_60px_rgba(169,221,211,0.3)] transition-all active:scale-95
+              ${isSyncing ? "bg-[#A9DDD3]/20 text-[#A9DDD3] animate-pulse cursor-wait" : "bg-[#A9DDD3] text-[#010101] hover:scale-105 hover:bg-white"}`}
             >
-                COMPLETE ARCHITECT PATH
+                {isSyncing ? "SYNCHRONIZING..." : "COMPLETE ARCHITECT PATH"}
             </button>
           </div>
       </div>

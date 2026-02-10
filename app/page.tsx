@@ -9,8 +9,8 @@ export default function RialoNexusAtrium() {
   const modules = [
     { id: 1, title: "ECONOMICS", tagline: "VERTICAL INTEGRATION", desc: "Solving Double Marginalization via full-stack architecture.", path: "/economics", icon: Coins, active: true },
     { id: 2, title: "RIALO EDGE", tagline: "NATIVE CONNECTIVITY", desc: "Low-latency HTTPS bridges for direct Web2 data feeds.", path: "/edge", icon: Globe, active: true },
-    { id: 3, title: "VELOCITY", tagline: "ULTRA-FAST BLOCKS", desc: "50ms block times designed for global internet-scale.", path: "/velocity", icon: Zap, active: true }, // КВЕСТ ОТКРЫТ
-    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Event-driven smart contracts acting natively.", path: "#", icon: Cog },
+    { id: 3, title: "VELOCITY", tagline: "ULTRA-FAST BLOCKS", desc: "50ms block times designed for global internet-scale.", path: "/velocity", icon: Zap, active: true },
+    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Event-driven smart contracts acting without keepers.", path: "/workflows", icon: Cog, active: true }, // ТЕПЕРЬ АКТИВНО
     { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Zero-knowledge verification for confidential logic.", path: "#", icon: ShieldAlert },
     { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "The ultimate habitat for advanced SVM builders.", path: "#", icon: Code2 },
     { id: 7, title: "AI AGENTS", tagline: "MACHINE ECONOMY", desc: "Sovereign infrastructure for autonomous AI.", path: "#", icon: Bot },
@@ -23,7 +23,7 @@ export default function RialoNexusAtrium() {
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-[#E8E3D5] uppercase italic">
           RIALO <span className="text-[#A9DDD3] text-glow-mint">NEXUS</span>
         </h1>
-        <p className="font-mono text-[10px] md:text-xs tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Initialize Learning Sequence v1.3</p>
+        <p className="font-mono text-[10px] md:text-xs tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Initialize Learning Sequence v1.4</p>
       </motion.div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full">

@@ -2,6 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --rialo-mint: #A9DDD3;
+  --rialo-beige: #E8E3D5;
+  --rialo-black: #010101;
+}
+
 body {
-  @apply bg-[#FFFBF5] text-slate-900;
+  background-color: var(--rialo-black);
+  color: var(--rialo-beige);
+  overflow-x: hidden;
+}
+
+/* Эффект сканирующей сетки */
+.cyber-grid-overlay {
+  background-image: linear-gradient(rgba(169, 221, 211, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(169, 221, 211, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+}
+
+/* Сильное неоновое свечение для активных элементов */
+.neon-border-glow {
+  box-shadow: 0 0 15px rgba(169, 221, 211, 0.2), inset 0 0 15px rgba(169, 221, 211, 0.1);
+  border-color: rgba(169, 221, 211, 0.5);
+}
+
+/* Свечение текста */
+.text-glow-mint {
+  text-shadow: 0 0 8px rgba(169, 221, 211, 0.6);
+}
+
+/* Диалоговое окно Агента */
+.agent-bubble {
+  background: rgba(1, 1, 1, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(169, 221, 211, 0.3);
+  box-shadow: 0 0 20px rgba(169, 221, 211, 0.1);
+}
+.agent-bubble::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    bottom: 20px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid rgba(169, 221, 211, 0.3);
 }

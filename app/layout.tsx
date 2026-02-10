@@ -1,51 +1,79 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Coins, Globe, Zap, Cog, ShieldAlert, Code2, Bot, Users } from 'lucide-react';
+import "./globals.css";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Cpu, Terminal as TerminalIcon } from "lucide-react";
+import NexusBackground from "../components/NexusBackground";
+import { AcademyProvider, useAcademy } from "../context/AcademyContext";
 
-export default function RialoNexusAtrium() {
-  const modules = [
-    { id: 1, title: "ECONOMICS", tagline: "VERTICAL INTEGRATION", desc: "How Rialo captures value by merging L1 core with native dApp services.", path: "/economics", icon: Coins, active: true },
-    { id: 2, title: "RIALO EDGE", tagline: "NATIVE CONNECTIVITY", desc: "Technical breakdown of native HTTPS oracles baked into consensus.", path: "/edge", icon: Globe, active: true },
-    { id: 3, title: "VELOCITY", tagline: "50MS FINALITY", desc: "The science behind parallel execution and ultra-fast block times.", path: "/velocity", icon: Zap, active: true },
-    { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Moving from reactive smart contracts to proactive autonomous workflows.", path: "/workflows", icon: Cog, active: true },
-    { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Understanding Zero-Knowledge proofs in an encrypted runtime environment.", path: "/privacy", icon: ShieldAlert, active: true },
-    { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "Deep dive into the SVM architecture and high-performance Rust contracts.", path: "/developers", icon: Code2, active: true }, // ТЕПЕРЬ АКТИВНО
-    { id: 7, title: "AI AGENTS", tagline: "MACHINE ECONOMY", desc: "Sovereign AI: Agents with wallets, agency, and financial independence.", path: "/ai-agents", icon: Bot, active: true },
-    { id: 8, title: "NETWORK", tagline: "THE COLLECTIVE", desc: "Global node distribution and the future of decentralized coordination.", path: "/network", icon: Users, active: true },
-  ];
+function GlobalUI({ children }: { children: React.ReactNode }) {
+  const [xp, setXp] = useState(0);
+  const pathname = usePathname();
+  const { isFocused, logs } = useAcademy();
+
+  useEffect(() => {
+    const savedXp = typeof window !== "undefined" ? localStorage.getItem("rialo_xp") || "0" : "0";
+    setXp(parseInt(savedXp));
+  }, [pathname]);
+
+  const getAgentMessage = () => {
+    if (pathname === "/ai-agents") return "Sovereign AI is the final step. Machines with wallets, act natively.";
+    if (pathname === "/developers") return "Rust & SVM: The highest performance stack in Web3.";
+    return "Select a protocol module to begin deep integration.";
+  };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 py-20 overflow-hidden">
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16 relative z-10">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 text-[#E8E3D5] uppercase italic leading-none">
-          RIALO <span className="text-[#A9DDD3] text-glow-mint">ACADEMY</span>
-        </h1>
-        <p className="font-mono text-[10px] tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Advanced Protocol Learning v2.0</p>
-      </motion.div>
+    <body className="antialiased bg-[#010101] text-[#E8E3D5] overflow-x-hidden">
+      <div className="fixed inset-0 z-0"><NexusBackground /></div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full relative z-10">
-        {modules.map((mod, index) => (
-          <Link href={mod.path} key={mod.id}>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              transition={{ delay: index * 0.04 }}
-              whileHover={{ y: -5, borderColor: '#A9DDD3', backgroundColor: 'rgba(169, 221, 211, 0.05)' }}
-              className="h-full bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-[2rem] p-8 flex flex-col items-start justify-between transition-all duration-300"
-            >
-              <div className="p-3 bg-[#A9DDD3]/10 text-[#A9DDD3] rounded-xl mb-8"><mod.icon size={24} /></div>
-              <div>
-                <p className="text-[9px] font-mono tracking-widest text-[#A9DDD3] mb-2 uppercase font-bold">{mod.tagline}</p>
-                <h3 className="text-xl font-bold text-[#E8E3D5] mb-3">{mod.title}</h3>
-                <p className="text-xs text-[#E8E3D5]/40 leading-relaxed italic">{mod.desc}</p>
+      {/* HEADER */}
+      <header className="fixed top-0 left-0 right-0 z-40 h-20 flex items-center justify-between px-8 bg-[#010101]/60 backdrop-blur-xl border-b border-[#A9DDD3]/10">
+          <div className="flex items-center space-x-6">
+              <div className="p-2 bg-[#A9DDD3]/10 rounded-lg text-[#A9DDD3]"><Cpu size={22} /></div>
+              <span className="text-xl font-black tracking-tighter text-[#A9DDD3] italic uppercase">RIALO ACADEMY</span>
+          </div>
+          <div className="font-mono text-[10px] text-[#A9DDD3]/40 tracking-[0.3em] uppercase">SYNC_STATUS: ACTIVE</div>
+      </header>
+
+      {/* CONTENT */}
+      <div className="relative z-10 pt-20 pb-40">{children}</div>
+
+      {/* TERMINAL LOGS */}
+      <div className="fixed bottom-0 left-0 right-0 z-[100] h-32 bg-[#010101]/95 border-t border-[#A9DDD3]/20 p-5 font-mono">
+          <div className="max-w-7xl mx-auto flex items-start space-x-8">
+              <div className="flex items-center space-x-2 text-[#A9DDD3] opacity-50 shrink-0">
+                  <TerminalIcon size={14} className="animate-pulse" />
+                  <span className="text-[10px] uppercase font-black">Live Node Logs</span>
               </div>
-            </motion.div>
-          </Link>
-        ))}
+              <div className="flex-1 space-y-1 overflow-hidden">
+                  {logs.map((log: string, i: number) => (
+                      <p key={i} className="text-[10px] text-[#A9DDD3]/80 leading-none">{log}</p>
+                  ))}
+              </div>
+          </div>
       </div>
-    </main>
+
+      {/* AGENT */}
+      <div className="fixed bottom-36 right-8 z-50 flex items-end space-x-4 pointer-events-none">
+          <div className="p-4 rounded-xl max-w-xs mb-12 border border-[#A9DDD3]/20 bg-[#010101]/80 backdrop-blur-md shadow-2xl">
+              <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-1 font-bold">AI Mentor</p>
+              <p className="text-[#E8E3D5] text-[11px] leading-relaxed italic">"{getAgentMessage()}"</p>
+          </div>
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity }} className="relative w-32 h-32 md:w-44 md:h-44">
+              <Image src="/avatar.png" alt="Rialo Mentor" width={176} height={176} className="object-contain" />
+          </motion.div>
+      </div>
+    </body>
+  );
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <AcademyProvider><GlobalUI>{children}</GlobalUI></AcademyProvider>
+    </html>
   );
 }

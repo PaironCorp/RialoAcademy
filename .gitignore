@@ -1,13 +1,10 @@
-# Зависимости
 node_modules
 .next
 out
 build
-
-# Операционная система
 .DS_Store
 
-# СЕКРЕТНЫЕ ФАЙЛЫ (Никогда не попадут на GitHub)
+# Секретные файлы ключей
 .env
 .env.local
 .env.development.local

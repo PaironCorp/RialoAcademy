@@ -12,7 +12,7 @@ export default function RialoNexusAtrium() {
     { id: 3, title: "VELOCITY", tagline: "ULTRA-FAST BLOCKS", desc: "50ms block times designed for global internet-scale.", path: "/velocity", icon: Zap, active: true },
     { id: 4, title: "WORKFLOWS", tagline: "AUTONOMOUS LOGIC", desc: "Event-driven smart contracts acting natively.", path: "/workflows", icon: Cog, active: true },
     { id: 5, title: "PRIVACY", tagline: "REX COMPUTATION", desc: "Zero-knowledge verification for confidential logic.", path: "/privacy", icon: ShieldAlert, active: true },
-    { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "The ultimate habitat for advanced SVM builders.", path: "#", icon: Code2 },
+    { id: 6, title: "DEVELOPERS", tagline: "RUST & SVM CORE", desc: "Deep dive into the SVM architecture and high-performance Rust.", path: "/developers", icon: Code2, active: true }, // ТЕПЕРЬ АКТИВНО
     { id: 7, title: "AI AGENTS", tagline: "MACHINE ECONOMY", desc: "Sovereign infrastructure for autonomous AI.", path: "/ai-agents", icon: Bot, active: true },
     { id: 8, title: "NETWORK", tagline: "THE COLLECTIVE", desc: "Join the ecosystem and define the future.", path: "/network", icon: Users, active: true },
   ];
@@ -23,7 +23,7 @@ export default function RialoNexusAtrium() {
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-[#E8E3D5] uppercase italic leading-none">
           RIALO <span className="text-[#A9DDD3] text-glow-mint">NEXUS</span>
         </h1>
-        <p className="font-mono text-[10px] md:text-xs tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic">Initialize Learning Sequence v2.0</p>
+        <p className="font-mono text-[10px] md:text-xs tracking-[0.5em] text-[#A9DDD3]/50 uppercase italic font-bold">Initialize Learning Sequence v2.1</p>
       </motion.div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full">

@@ -9,8 +9,8 @@ import { Zap, BrainCircuit, Send } from "lucide-react";
 import { useChat } from "ai/react"; 
 import { AcademyProvider, useAcademy } from "../context/AcademyContext";
 
-// 1. ИМПОРТ ЖИВОЙ СЕТИ
-import NexusBackground from "./components/NexusBackground";
+// ИСПРАВЛЕННЫЙ ПУТЬ: Мы выходим из папки app в корень (../)
+import NexusBackground from "../components/NexusBackground";
 
 function GlobalUI({ children }: { children: React.ReactNode }) {
   const { isFocused } = useAcademy();
@@ -21,7 +21,7 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
     ? mentorMessages[mentorMessages.length - 1].content 
     : "Stay focused on the mission, Initiate. The Nexus is watching.";
 
-  // Варианты анимации для колец атома
+  // Анимация колец атома вокруг логотипа
   const ringVariants = {
     animate: (custom: number) => ({
       rotate: [0, 360],
@@ -34,10 +34,10 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <body className="antialiased bg-[#010101] text-[#E8E3D5] overflow-x-hidden font-sans selection:bg-[#A9DDD3]/30">
+    <body className="antialiased bg-[#010101] text-[#E8E3D5] overflow-x-hidden font-sans">
       
-      {/* 1. ФОНОВАЯ ЖИВАЯ СЕТЬ (Вернули назад) */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-50 mix-blend-screen">
+      {/* 1. ЖИВАЯ ПАУТИНА (z-index: 0) */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
         <NexusBackground />
       </div>
 
@@ -46,38 +46,13 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
           className="relative flex items-center justify-center pointer-events-auto"
         >
-            {/* --- ЭФФЕКТ АТОМА (Вращающиеся кольца) --- */}
-            {/* Кольцо 1 (Медленное) */}
-            <motion.div 
-              variants={ringVariants}
-              animate="animate"
-              custom={20} // Скорость вращения
-              className="absolute w-[180px] h-[180px] border border-[#A9DDD3]/20 rounded-full shadow-[0_0_30px_rgba(169,221,211,0.1)]"
-              style={{ borderRadius: '40% 60% 60% 40% / 40% 40% 60% 60%' }} // Неидеальный круг для эффекта орбиты
-            />
-            {/* Кольцо 2 (Среднее, в другую сторону) */}
-            <motion.div 
-              variants={ringVariants}
-              animate="animate"
-              custom={15}
-              className="absolute w-[160px] h-[160px] border border-[#A9DDD3]/30 rounded-full shadow-[0_0_20px_rgba(169,221,211,0.15)] rotate-45"
-              style={{ borderRadius: '60% 40% 40% 60% / 60% 60% 40% 40%' }}
-            />
-            {/* Кольцо 3 (Быстрое, яркое) */}
-             <motion.div 
-              variants={ringVariants}
-              animate="animate"
-              custom={10}
-              className="absolute w-[140px] h-[60px] border-2 border-[#A9DDD3]/40 rounded-full shadow-[0_0_35px_rgba(169,221,211,0.3)] blur-[1px]"
-            />
-            
-            {/* ЦЕНТРАЛЬНОЕ СВЕЧЕНИЕ */}
+            <motion.div variants={ringVariants} animate="animate" custom={20} className="absolute w-[180px] h-[180px] border border-[#A9DDD3]/20 rounded-full" style={{ borderRadius: '40% 60% 60% 40% / 40% 40% 60% 60%' }} />
+            <motion.div variants={ringVariants} animate="animate" custom={15} className="absolute w-[160px] h-[160px] border border-[#A9DDD3]/30 rounded-full rotate-45" style={{ borderRadius: '60% 40% 40% 60% / 60% 60% 40% 40%' }} />
+            <motion.div variants={ringVariants} animate="animate" custom={10} className="absolute w-[140px] h-[60px] border-2 border-[#A9DDD3]/40 rounded-full blur-[1px]" />
             <div className="absolute w-[100px] h-[40px] bg-[#A9DDD3]/10 blur-[40px] rounded-full animate-pulse" />
 
-            {/* ЛОГОТИП RIALO */}
             <Image 
               src="/images/logo.png" 
               alt="Rialo Logo" 
@@ -91,7 +66,7 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
       {/* ОСНОВНОЙ КОНТЕНТ */}
       <div className="relative z-10">{children}</div>
 
-      {/* ИНТЕРФЕЙС ВИКИНГА (Оставили без изменений) */}
+      {/* 3. ИНТЕРФЕЙС ВИКИНГА */}
       <div className="fixed bottom-36 right-8 z-50 flex flex-col items-end pointer-events-none transform-gpu">
           <AnimatePresence>
               <motion.div initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} className="mb-6 pointer-events-auto">
@@ -105,7 +80,7 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
                           <p className="text-[#E8E3D5] text-[20px] leading-relaxed font-bold italic tracking-tight">"{mentorText}"</p>
                       </div>
                       <form onSubmit={handleSubmit} className="mt-6 flex items-center bg-black/60 border border-[#A9DDD3]/20 rounded-2xl p-3 group focus-within:border-[#A9DDD3]/50 transition-all shrink-0">
-                        <input value={input} onChange={handleInputChange} placeholder="Ask the Forge..." className="flex-1 bg-transparent border-none outline-none text-[15px] text-white px-3 italic font-bold placeholder:text-[#A9DDD3]/20" />
+                        <input value={input} onChange={handleInputChange} placeholder="Ask the Forge..." className="flex-1 bg-transparent border-none outline-none text-[15px] text-white px-3 italic font-bold" />
                         <button type="submit" className="p-2 text-[#A9DDD3] hover:scale-125 transition-all">
                           {isLoading ? <div className="w-5 h-5 border-2 border-[#A9DDD3] border-t-transparent rounded-full animate-spin" /> : <Send size={20} />}
                         </button>

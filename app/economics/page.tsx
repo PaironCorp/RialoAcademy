@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Coins, Zap, ShieldCheck, Trophy, Target, Sparkles, CheckCircle } from 'lucide-react';
+// Добавлена иконка Award в импорт ниже
+import { ArrowLeft, Coins, Zap, ShieldCheck, Trophy, Target, Sparkles, CheckCircle, Award } from 'lucide-react';
 import Link from 'next/link';
 
 export default function EconomicsMission() {
@@ -12,24 +13,23 @@ export default function EconomicsMission() {
   const legacyLoss = userCost * 0.82;
   const rialoSaving = userCost * 0.9;
 
-  // Function to claim XP and save to memory
   const handleComplete = () => {
     const currentXp = parseInt(localStorage.getItem("rialo_xp") || "0");
     const newXp = currentXp + 1250;
     localStorage.setItem("rialo_xp", newXp.toString());
     setIsCompleted(true);
-    // Refresh page briefly to update global layout XP bar
+    // Refresh to update the global XP bar in layout
     setTimeout(() => window.location.reload(), 1500);
   };
 
   return (
     <main className="min-h-screen p-6 md:p-12 lg:pt-32 flex flex-col items-center relative z-10">
       
-      {/* Success Modal Overlay */}
+      {/* Success Modal */}
       <AnimatePresence>
         {isCompleted && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[100] bg-[#010101]/90 backdrop-blur-xl flex items-center justify-center p-6">
-            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-rialo-mint/10 border border-rialo-mint/30 p-12 rounded-[3rem] text-center max-w-sm">
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-rialo-mint/10 border border-rialo-mint/30 p-12 rounded-[3rem] text-center max-w-sm shadow-[0_0_50px_rgba(169,221,211,0.2)]">
                 <CheckCircle className="text-rialo-mint mx-auto mb-6" size={80} />
                 <h2 className="text-3xl font-black text-rialo-beige italic mb-2 uppercase tracking-tighter">Mission Secured</h2>
                 <p className="text-rialo-mint font-mono text-[10px] tracking-widest uppercase mb-8">+1,250 XP // Synchronizing Profile</p>
@@ -41,7 +41,7 @@ export default function EconomicsMission() {
         )}
       </AnimatePresence>
 
-      {/* Main UI */}
+      {/* Navigation */}
       <div className="max-w-6xl w-full mb-12 flex justify-between items-center">
         <Link href="/">
           <motion.div whileHover={{ x: -5 }} className="flex items-center text-rialo-mint/60 hover:text-rialo-mint cursor-pointer font-mono text-[10px] uppercase tracking-[0.3em] transition-colors">
@@ -102,12 +102,13 @@ export default function EconomicsMission() {
                 </div>
                 <div className="space-y-6 mb-10">
                     <div className="group flex items-center justify-between p-5 bg-white/5 rounded-2xl border border-white/5 transition-all hover:bg-rialo-mint/5">
-                        <div className="flex flex-col"><span className="text-[8px] font-mono text-rialo-beige/40 uppercase">Badge</span><span className="text-base font-bold text-rialo-beige">Visionary</span></div>
+                        <div className="flex flex-col"><span className="text-[8px] font-mono text-rialo-beige/40 uppercase">Badge</span><span className="text-base font-bold text-rialo-beige">Economic Visionary</span></div>
+                        {/* Иконка Award теперь импортирована корректно */}
                         <Award size={18} className="text-rialo-beige/20 group-hover:text-rialo-mint" />
                     </div>
                     <div className="flex items-center justify-between p-5 bg-rialo-mint/5 rounded-2xl border border-rialo-mint/20">
                         <div className="flex flex-col"><span className="text-[8px] font-mono text-rialo-mint/60 uppercase">Experience</span><span className="text-base font-bold text-rialo-mint">+1,250 XP</span></div>
-                        <div className="w-4 h-4 rounded-full bg-rialo-mint animate-ping" />
+                        <div className="w-4 h-4 rounded-full bg-rialo-mint animate-ping shadow-[0_0_15px_rgba(169,221,211,0.5)]" />
                     </div>
                 </div>
                 <button 

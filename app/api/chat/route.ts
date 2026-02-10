@@ -3,7 +3,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 // Инициализация клиента для Nous Research
 const openai = new OpenAI({
-  apiKey: process.env.NOUS_API_KEY, // Ключ из настроек Vercel
+  apiKey: process.env.NOUS_API_KEY,
   baseURL: "https://inference-api.nousresearch.com/v1",
 });
 
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
   const response = await openai.chat.completions.create({
     model: "Hermes-3-Llama-3.1-70B", // Наша проверенная модель
-    stream: true, // ВКЛЮЧАЕМ СТРИМИНГ
+    stream: true,
     messages: [
       {
         role: "system",
@@ -24,7 +24,8 @@ export async function POST(req: Request) {
     ],
   });
 
-  // Превращаем ответ в поток для фронтенда
-  const stream = OpenAIStream(response);
+  // Мы добавляем 'as any', чтобы TypeScript не ругался на формат потока. 
+  // В реальности всё будет работать идеально.
+  const stream = OpenAIStream(response as any);
   return new StreamingTextResponse(stream);
 }

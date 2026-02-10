@@ -22,17 +22,15 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
     setLevel(Math.floor(totalXp / 2000) + 1);
   }, [pathname]);
 
-  // ДИНАМИЧЕСКИЕ ИНСТРУКЦИИ
   const getAgentMessage = () => {
-    if (pathname === "/") return "Welcome back. Select a portal to continue your neural integration.";
-    if (pathname === "/economics") return "Analyze the data. See how vertical integration prevents capital leakage.";
+    if (pathname === "/") return "Welcome back. Select a portal to continue your integration.";
+    if (pathname === "/economics") return "Analyze the capital flow. Rialo's stack eliminates the middleware tax.";
     if (pathname === "/edge") {
-        // Если мост не активен (isFocused = false), просим включить его
         return isFocused 
-          ? "System synchronized. Observe the native data flow from Web2 sources." 
-          : "Mission Critical: You must initialize the Native Bridge to observe the technology in action.";
+          ? "System synchronized. Data is now flowing natively through the L1 core." 
+          : "Initialize the Bridge to witness the magic of native connectivity.";
     }
-    return "Focus on the objective, Initiate.";
+    return "Stay focused on the mission, Initiate.";
   };
 
   const progress = (xp % 2000) / 20;
@@ -64,24 +62,24 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 
       <div className="relative z-10 pt-20">{children}</div>
 
-      {/* --- MENTOR DYNAMICS --- */}
+      {/* --- ACADEMY MENTOR --- */}
       <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
           <AnimatePresence mode="wait">
               <motion.div 
-                key={getAgentMessage()} // Перерисовываем бабл при смене сообщения
+                key={getAgentMessage()}
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                 className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative"
               >
-                <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-2 tracking-widest italic">AI Mentor // Voice</p>
+                <p className="text-[#A9DDD3] font-mono text-[9px] uppercase mb-2 tracking-widest italic">AI Mentor // Status</p>
                 <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"{getAgentMessage()}"</p>
               </motion.div>
           </AnimatePresence>
 
           <motion.div 
             animate={{ 
-                y: isFocused ? -220 : [0, -8, 0], 
-                x: isFocused ? -420 : 0,           
-                scale: isFocused ? 1.15 : 1,
+                y: isFocused ? -200 : [0, -8, 0], 
+                x: isFocused ? -480 : 0, // Сдвинут чуть левее, чтобы не мешать сайдбару          
+                scale: isFocused ? 1.1 : 1, // Уменьшен масштаб для чистоты экрана
             }}
             transition={{ 
               y: isFocused ? { type: "spring", stiffness: 80 } : { duration: 4, repeat: Infinity, ease: "easeInOut" },

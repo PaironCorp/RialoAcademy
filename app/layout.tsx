@@ -25,7 +25,7 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
   const progress = (xp % 2000) / 20;
 
   return (
-    <body className="antialiased bg-[#010101] text-[#E8E3D5]">
+    <body className="antialiased bg-[#010101] text-[#E8E3D5] selection:bg-[#A9DDD3] selection:text-[#010101]">
       <div className="fixed inset-0 z-0"><NexusBackground /></div>
       
       <header className="fixed top-0 left-0 right-0 z-40 h-20 flex items-center justify-between px-8 bg-[#010101]/60 backdrop-blur-xl border-b border-[#A9DDD3]/10">
@@ -51,23 +51,21 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 
       <div className="relative z-10 pt-20">{children}</div>
 
-      {/* --- ACADEMY MENTOR POSITIONING --- */}
+      {/* --- MENTOR DYNAMICS (Targeting your red arrow position) --- */}
       <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
-          {/* Стандартный бабл (скрыт при фокусе) */}
           <AnimatePresence>
             {!isFocused && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative">
-                <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"Welcome to the module, Initiate. Use the interface to establish a native connection."</p>
+                <p className="text-[#E8E3D5] text-[11px] leading-relaxed font-medium italic">"Mission parameters initialized. Ready for neural link."</p>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Аватар: перемещение в центр-право (позиция твоей стрелки) */}
           <motion.div 
             animate={{ 
-              y: isFocused ? -220 : [0, -8, 0], // Поднимается вверх
-              x: isFocused ? -420 : 0,           // Сдвигается сильно влево (к центру)
-              scale: isFocused ? 1.2 : 1,       // Небольшое увеличение
+              y: isFocused ? -220 : [0, -8, 0], 
+              x: isFocused ? -420 : 0,           
+              scale: isFocused ? 1.15 : 1, // Деликатное увеличение, не перекрывает текст
             }}
             transition={{ 
               y: isFocused ? { type: "spring", stiffness: 80 } : { duration: 4, repeat: Infinity, ease: "easeInOut" },
@@ -85,7 +83,9 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <AcademyProvider><GlobalUI>{children}</AcademyProvider>
+      <AcademyProvider>
+        <GlobalUI>{children}</GlobalUI>
+      </AcademyProvider>
     </html>
   );
 }

@@ -38,7 +38,6 @@ export default function RialoEdgeMission() {
   return (
     <main className="min-h-screen p-6 md:p-12 lg:pt-32 flex flex-col items-center relative z-10">
       
-      {/* --- NAVIGATION --- */}
       <div className="max-w-6xl w-full mb-12 flex justify-between items-center">
         <Link href="/"><div className="flex items-center text-[#A9DDD3]/60 hover:text-[#A9DDD3] cursor-pointer font-mono text-[10px] uppercase tracking-[0.3em] transition-colors"><ArrowLeft className="mr-2" size={14} /> [ Back to Nexus ]</div></Link>
         <div className="bg-[#A9DDD3]/5 border border-[#A9DDD3]/20 px-5 py-2 rounded-full text-[#E8E3D5] font-mono text-[10px] uppercase tracking-widest shadow-[0_0_15px_rgba(169,221,211,0.1)]">Mission 02: <span className="text-[#A9DDD3] font-bold text-glow-mint">The World Sensor</span></div>
@@ -49,10 +48,10 @@ export default function RialoEdgeMission() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-[#010101]/80 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-10 md:p-14 shadow-2xl overflow-hidden relative">
                 <h1 className="text-5xl md:text-7xl font-black text-[#E8E3D5] mb-8 tracking-tighter italic uppercase leading-[0.9]">The <span className="text-[#A9DDD3]">Rialo</span> <br/>Edge Interface</h1>
                 <div className="space-y-6 text-[#E8E3D5]/70 text-lg md:text-xl font-medium leading-relaxed max-w-xl">
-                    <p>Traditional blockchains suffer from the "Oracle Gap"—a massive delay and cost overhead when fetching Web2 data.</p>
+                    <p>Traditional blockchains suffer from the <strong className="text-white">"Oracle Gap"</strong>—a massive delay and cost overhead when fetching Web2 data.</p>
                 </div>
 
-                {/* --- BRIDGE VISUALIZER --- */}
+                {/* --- DATA BRIDGE VISUALIZER --- */}
                 <div className="mt-16 bg-white/[0.02] border border-white/5 rounded-[3rem] p-12 text-center relative overflow-hidden shadow-inner">
                     <div className="flex justify-around items-center mb-16 relative z-10">
                         <div className="flex flex-col items-center">
@@ -110,33 +109,28 @@ export default function RialoEdgeMission() {
         {isBridgeActive && (
           <motion.div 
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }}
-            // Этот блок появляется в центре-право, прямо над головой Ментора
-            className="fixed bottom-[400px] right-[10%] z-[60] p-8 bg-[#010101]/95 backdrop-blur-2xl border border-[#A9DDD3]/30 rounded-[2.5rem] max-w-xl shadow-[0_0_50px_rgba(169,221,211,0.2)] pointer-events-none"
+            className="fixed bottom-[420px] right-[8%] z-[60] p-10 bg-[#010101]/95 backdrop-blur-3xl border border-[#A9DDD3]/30 rounded-[3rem] max-w-2xl shadow-[0_0_60px_rgba(169,221,211,0.2)] pointer-events-none"
           >
-             <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 bg-[#A9DDD3]/10 rounded-lg text-[#A9DDD3]"><Wifi size={20} className="animate-pulse" /></div>
-                <span className="text-xs font-mono text-[#A9DDD3] uppercase tracking-widest font-bold">Deep Academy Analysis // Protocol 2.1</span>
+             <div className="flex items-center space-x-3 mb-6">
+                <div className="p-3 bg-[#A9DDD3]/10 rounded-xl text-[#A9DDD3]"><Wifi size={24} className="animate-pulse" /></div>
+                <span className="text-sm font-mono text-[#A9DDD3] uppercase tracking-[0.3em] font-bold text-glow-mint">Protocol Analysis // World Sensor v2.1</span>
              </div>
              
-             {/* РАСШИРЕННЫЙ ТЕКСТ ДЛЯ АКАДЕМИИ */}
-             <div className="space-y-4 text-[#E8E3D5] leading-relaxed">
-                <p className="text-base font-bold italic border-b border-white/10 pb-2">"This is not just a bridge—it is a native world sensor."</p>
-                <p className="text-sm opacity-80">
-                   By baking HTTPS-connectivity into the <strong className="text-[#A9DDD3]">L1 Consensus</strong>, Rialo eliminates the 3rd-party "Oracle Tax". 
+             <div className="space-y-6 text-[#E8E3D5]">
+                <p className="text-xl font-bold italic border-b border-white/10 pb-4">"Direct L1-to-Web2 connectivity is the cornerstone of Rialo."</p>
+                <p className="text-base leading-relaxed opacity-90">
+                   By baking HTTPS-bridges natively into the consensus, we eliminate the 3rd-party "Oracle Tax". This allows for trustless, real-time data ingestion at the speed of the global internet.
                 </p>
-                <div className="grid grid-cols-2 gap-4 mt-6">
-                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                        <p className="text-[10px] font-mono text-[#A9DDD3] uppercase mb-1">Latency</p>
-                        <p className="text-xl font-bold">12ms <span className="text-[10px] opacity-30 font-normal">Native</span></p>
+                <div className="grid grid-cols-2 gap-6 mt-8">
+                    <div className="p-6 bg-white/5 rounded-3xl border border-white/10">
+                        <p className="text-[11px] font-mono text-[#A9DDD3] uppercase mb-2">Native Latency</p>
+                        <p className="text-2xl font-black">12ms <span className="text-xs opacity-30 font-thin italic">Ultra-Low</span></p>
                     </div>
-                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                        <p className="text-[10px] font-mono text-[#A9DDD3] uppercase mb-1">Security</p>
-                        <p className="text-xl font-bold">Direct <span className="text-[10px] opacity-30 font-normal">L1 Sig</span></p>
+                    <div className="p-6 bg-white/5 rounded-3xl border border-white/10">
+                        <p className="text-[11px] font-mono text-[#A9DDD3] uppercase mb-2">Security Tier</p>
+                        <p className="text-2xl font-black">Direct <span className="text-xs opacity-30 font-thin italic">Consensus</span></p>
                     </div>
                 </div>
-                <p className="text-[11px] font-mono text-[#A9DDD3]/50 mt-4 uppercase">
-                   Result: Developers can build dApps that react to real-world events at the speed of the global internet.
-                </p>
              </div>
           </motion.div>
         )}

@@ -16,16 +16,14 @@ export default function RootLayout({
         <title>RIALO ACADEMY | The Nexus</title>
       </head>
       <body className="antialiased bg-[#010101] selection:bg-[#A9DDD3] selection:text-[#010101]">
-        {/* Живой фон */}
         <div className="fixed inset-0 z-0">
           <NexusBackground />
         </div>
         <div className="fixed inset-0 z-0 cyber-grid-overlay pointer-events-none opacity-50"></div>
 
-        {/* --- НОВЫЙ HEADER (БАННЕР) --- */}
+        {/* --- GLOBAL HEADER --- */}
         <header className="fixed top-0 left-0 right-0 z-40 h-20 flex items-center justify-between px-8 bg-[#010101]/50 backdrop-blur-md border-b border-rialo-mint/10">
             <div className="flex items-center space-x-3">
-                {/* Временный логотип-иконка, пока нет SVG */}
                 <div className="p-2 bg-rialo-mint/10 rounded-lg border border-rialo-mint/30 text-rialo-mint neon-border-glow">
                     <Cpu size={24} />
                 </div>
@@ -34,31 +32,28 @@ export default function RootLayout({
                 </span>
             </div>
             <div className="font-mono text-xs text-rialo-mint/50 tracking-widest uppercase">
-                SYSTEM STATUS: <span className="text-rialo-mint animate-pulse">ONLINE</span>
+                SYSTEM STATUS: <span className="text-rialo-mint animate-pulse">OPERATIONAL</span>
             </div>
         </header>
 
-        {/* Основной контент */}
         <div className="relative z-10 pt-20">
           {children}
         </div>
 
-        {/* --- АГЕНТ-ИИ ПОМОЩНИК (Анимированный) --- */}
+        {/* --- AI GUIDE AGENT (English Version) --- */}
         <div className="fixed bottom-8 right-8 z-50 flex items-end space-x-4 pointer-events-none">
-            {/* Диалоговое окно агента */}
              <motion.div 
                initial={{ opacity: 0, x: 20 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ delay: 1 }}
                className="agent-bubble p-4 rounded-xl max-w-xs mb-12 relative"
              >
-                <p className="text-rialo-mint font-mono text-xs uppercase mb-2 tracking-widest">AI Guide // Intro Protocol</p>
-                <p className="text-rialo-beige text-sm leading-relaxed">
-                   "Приветствую в Нексусе. Я твой проводник по архитектуре полного стека. Выбери портал <strong className="text-rialo-mint">ECONOMICS</strong>, чтобы начать обучение."
+                <p className="text-rialo-mint font-mono text-[10px] uppercase mb-2 tracking-widest">AI Guide // Mission Control</p>
+                <p className="text-rialo-beige text-xs leading-relaxed font-medium">
+                   "Welcome to the Nexus. I am your guide through the Rialo vertical stack. Select <strong className="text-rialo-mint">ECONOMICS</strong> to begin your initiation."
                 </p>
              </motion.div>
 
-             {/* Парящий Аватар */}
             <motion.div 
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}

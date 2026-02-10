@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Bot, Trophy, CheckCircle, Wifi, Cpu, Activity, Brain, Rocket, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Bot, Trophy, CheckCircle, Cpu, Brain, Rocket, TrendingUp, FastForward } from 'lucide-react';
 import Link from 'next/link';
 import { useAcademy } from "../../context/AcademyContext";
 
@@ -29,8 +29,8 @@ export default function AIAgentsMission() {
       setIsDeploying(false);
       setIsAgentActive(true);
       addLog("[AGENT_01]: Online. Neural pathways synced.");
-      addLog("[MARKET_DYNAMICS]: Fetching real-time DEX liquidity...");
-      addLog("[AGENT_01]: Opportunity detected. Executing arbitrage swap...");
+      addLog("[MARKET]: DEX opportunity detected. Executing arbitrage swap...");
+      addLog("[LEDGER]: Signature verified by machine-owned wallet.");
     }, 2500);
   };
 
@@ -43,19 +43,25 @@ export default function AIAgentsMission() {
         setAlreadyClaimed(true);
     }
     setIsCompleted(true);
-    addLog("[ACADEMY]: Mission 07: Machine Economy Mastered. +5,000 XP.");
+    addLog("[ACADEMY]: Mission 07 Complete. +5,000 XP.");
   };
 
   return (
     <main className="min-h-screen p-6 md:p-12 lg:pt-32 flex flex-col items-center relative z-10">
       
+      {/* SUCCESS MODAL -> ПЕРЕХОД К ФИНАЛУ */}
       <AnimatePresence>
         {isCompleted && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[100] bg-[#010101]/95 backdrop-blur-2xl flex items-center justify-center p-6 text-center">
-            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 p-12 rounded-[3.5rem] max-w-sm">
+            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 p-12 rounded-[3.5rem] max-w-sm shadow-[0_0_50px_rgba(169,221,211,0.2)]">
                 <CheckCircle className="text-[#A9DDD3] mx-auto mb-6" size={80} />
-                <h2 className="text-3xl font-black text-[#E8E3D5] italic mb-2 uppercase">Neural Master</h2>
-                <Link href="/"><button className="w-full py-5 bg-[#A9DDD3] text-[#010101] font-black uppercase text-xs tracking-[0.3em] rounded-2xl">Return to Nexus</button></Link>
+                <h2 className="text-3xl font-black text-[#E8E3D5] italic mb-2 uppercase tracking-tighter">Neural Link Active</h2>
+                <p className="text-[#A9DDD3] font-mono text-[10px] tracking-widest uppercase mb-10">AI Citizen Status: Verified</p>
+                <Link href="/network">
+                    <button className="w-full py-5 bg-[#A9DDD3] text-[#010101] font-black uppercase text-xs tracking-[0.3em] rounded-2xl flex items-center justify-center group hover:bg-white transition-all">
+                        Final Stage: Network <FastForward className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
+                    </button>
+                </Link>
             </motion.div>
           </motion.div>
         )}
@@ -63,14 +69,14 @@ export default function AIAgentsMission() {
 
       <div className="max-w-6xl w-full mb-12 flex justify-between items-center relative z-10">
         <Link href="/"><div className="flex items-center text-[#A9DDD3]/60 hover:text-[#A9DDD3] cursor-pointer font-mono text-[10px] uppercase tracking-[0.3em] transition-colors"><ArrowLeft className="mr-2" size={14} /> [ Back to Nexus ]</div></Link>
-        <div className="bg-[#A9DDD3]/5 border border-[#A9DDD3]/20 px-5 py-2 rounded-full text-[#E8E3D5] font-mono text-[10px] uppercase tracking-widest shadow-[0_0_15px_rgba(169,221,211,0.1)]">Mission 07: <span className="text-[#A9DDD3] font-bold text-glow-mint">Machine Economy</span></div>
+        <div className="bg-[#A9DDD3]/5 border border-[#A9DDD3]/20 px-5 py-2 rounded-full text-[#E8E3D5] font-mono text-[10px] uppercase tracking-widest">Mission 07: <span className="text-[#A9DDD3] font-bold text-glow-mint">Machine Economy</span></div>
       </div>
 
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 items-start relative z-10">
         <div className="lg:col-span-2 space-y-6">
-            <motion.div layout className="bg-[#010101]/80 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden transition-all duration-500">
+            <motion.div layout className="bg-[#010101]/80 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-10 md:p-14 shadow-2xl relative overflow-hidden transition-all duration-500">
                 <h1 className="text-5xl md:text-7xl font-black text-[#E8E3D5] mb-6 tracking-tighter italic uppercase leading-[0.9]">The <br/><span className="text-[#A9DDD3]">Sovereign</span> Brain</h1>
-                <p className="text-[#E8E3D5]/70 text-lg font-medium leading-relaxed max-w-xl mb-12">Rialo provides the native rails for AI Agents to hold wallets, pay fees, and execute logic without human oversight.</p>
+                <p className="text-[#E8E3D5]/70 text-lg font-medium leading-relaxed max-w-xl mb-12 italic">Rialo provides the native rails for AI Agents to hold wallets, pay fees, and execute logic without human oversight.</p>
 
                 <div className="bg-white/[0.02] border border-white/5 rounded-[3rem] p-10 shadow-inner text-center">
                     <AnimatePresence mode="wait">
@@ -84,9 +90,9 @@ export default function AIAgentsMission() {
                         ) : (
                             <motion.div key="active" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="py-10 space-y-8">
                                 <div className="flex justify-center space-x-6">
-                                    <div className="p-6 bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 rounded-full animate-bounce"><TrendingUp className="text-[#A9DDD3]" size={32} /></div>
+                                    <div className="p-6 bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 rounded-full animate-bounce shadow-[0_0_30px_rgba(169,221,211,0.2)]"><TrendingUp className="text-[#A9DDD3]" size={32} /></div>
                                     <div className="p-6 bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 rounded-full animate-pulse"><Cpu className="text-[#A9DDD3]" size={32} /></div>
-                                    <div className="p-6 bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 rounded-full animate-bounce [animation-delay:0.2s]"><Rocket className="text-[#A9DDD3]" size={32} /></div>
+                                    <div className="p-6 bg-[#A9DDD3]/10 border border-[#A9DDD3]/30 rounded-full animate-bounce [animation-delay:0.2s] shadow-[0_0_30px_rgba(169,221,211,0.2)]"><Rocket className="text-[#A9DDD3]" size={32} /></div>
                                 </div>
                                 <div className="p-6 bg-[#010101]/60 rounded-2xl border border-[#A9DDD3]/20 inline-block">
                                     <p className="font-mono text-[#A9DDD3] text-xs uppercase tracking-widest font-black">Agent Status: ACTIVE & TRADING</p>
@@ -95,25 +101,6 @@ export default function AIAgentsMission() {
                         )}
                     </AnimatePresence>
                 </div>
-
-                <AnimatePresence>
-                  {isAgentActive && (
-                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-10 pt-10 border-t border-white/5">
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[#E8E3D5]">
-                          <div className="space-y-4">
-                             <h3 className="text-[#A9DDD3] font-mono text-[10px] uppercase tracking-[0.4em] font-black">Protocol Specs</h3>
-                             <p className="text-xl font-bold italic">"Wallets for machines, not just humans."</p>
-                             <p className="text-sm opacity-60 leading-relaxed">Rialo enables AI Agents to act as first-class citizens. They can sign transactions natively within the SVM sandbox.</p>
-                          </div>
-                          <div className="p-6 bg-[#A9DDD3]/5 border border-[#A9DDD3]/20 rounded-3xl flex flex-col justify-center text-center">
-                                <p className="text-[10px] font-mono text-[#A9DDD3] uppercase mb-1">Architecture</p>
-                                <p className="text-2xl font-black text-[#A9DDD3]">Sovereign SVM</p>
-                                <p className="text-[9px] opacity-30 mt-2 font-mono italic">Parallelized Execution Layer</p>
-                          </div>
-                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
             </motion.div>
         </div>
 

@@ -31,6 +31,9 @@ function GlobalUI({ children }: { children: React.ReactNode }) {
     if (pathname === "/edge") return isFocused ? "System synchronized. Data flowing natively." : "Initialize the Bridge.";
     if (pathname === "/velocity") return isFocused ? "50ms Threshold breached." : "Engage the Velocity Test.";
     if (pathname === "/privacy") return isFocused ? "REX Computation active. Proof verified." : "Initialize the REX Shield.";
+    // ... (внутри функции getAgentMessage в GlobalUI)
+if (pathname === "/ai-agents") return isFocused ? "Neural pathways synced. The agent is now executing sovereign logic." : "Wallets for machines. Rialo allows AI to act as sovereign citizens.";
+if (pathname === "/network") return "The integration is almost complete. You are becoming part of the global collective.";
     return "Stay focused, Initiate.";
   };
 

@@ -1,43 +1,72 @@
-// Добавь это в компонент GlobalUI
-const [chatInput, setChatInput] = useState("");
-const [isThinking, setIsThinking] = useState(false);
+"use client";
 
-const askMentor = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!chatInput.trim()) return;
+import "./globals.css";
+import React from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { Zap, BrainCircuit, Send } from "lucide-react";
+import { useChat } from 'ai/react'; // Хук для живого стриминга
+import { AcademyProvider, useAcademy } from "../context/AcademyContext";
 
-  const userMsg = chatInput;
-  setChatInput("");
-  setIsThinking(true);
-  addLog(`[USER]: ${userMsg}`);
+function GlobalUI({ children }: { children: React.ReactNode }) {
+  const { isFocused } = useAcademy();
+  
+  // Подключаем живой чат
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
 
-  try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      body: JSON.stringify({ messages: [{ role: "user", content: userMsg }] }),
-    });
-    
-    // Здесь мы получаем ответ (для простоты - как единый блок, 
-    // но API поддерживает стриминг)
-    const data = await res.text(); 
-    addLog(`[MENTOR]: ${data}`); 
-  } catch (err) {
-    addLog("[ERROR]: Neural Link unstable. Retrying...");
-  } finally {
-    setIsThinking(false);
-  }
-};
+  // Берем последнее сообщение от ментора для отображения в баббле
+  const lastMessage = messages.filter(m => m.role !== 'user').last();
+  const mentorText = lastMessage ? lastMessage.content : "Stay focused on the mission, Initiate.";
 
-// В JSX (внутри облака мыслей Викинга)
-<form onSubmit={askMentor} className="mt-4 flex items-center bg-black/40 border border-[#A9DDD3]/20 rounded-xl p-2">
-  <input 
-    type="text"
-    value={chatInput}
-    onChange={(e) => setChatInput(e.target.value)}
-    placeholder="Ask me anything..."
-    className="flex-1 bg-transparent border-none outline-none text-[12px] text-white px-2 italic"
-  />
-  <button type="submit" className="text-[#A9DDD3] hover:scale-110 transition-transform px-2">
-    <Zap size={14} className={isThinking ? "animate-pulse" : ""} />
-  </button>
-</form>
+  return (
+    <body className="antialiased bg-[#010101] text-[#E8E3D5] overflow-x-hidden">
+      <div className="relative z-10">{children}</div>
+
+      {/* --- AVATAR & CHAT BUBBLE --- */}
+      <div className="fixed bottom-36 right-8 z-50 flex flex-col items-end pointer-events-none transform-gpu">
+          <AnimatePresence>
+              <motion.div initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} className="mb-6 pointer-events-auto">
+                  <div className="relative p-6 rounded-[2.5rem] max-w-[340px] bg-[#080808] border-2 border-[#A9DDD3]/30 shadow-2xl">
+                      <div className="absolute -bottom-3 right-12 w-6 h-6 bg-[#080808] border-r-2 border-b-2 border-[#A9DDD3]/30 rotate-45" />
+                      
+                      <div className="flex items-center space-x-2 mb-3">
+                        <BrainCircuit size={14} className="text-[#A9DDD3] animate-pulse" />
+                        <span className="text-[#A9DDD3] font-mono text-[10px] uppercase tracking-[0.3em] font-black italic opacity-60">Neural Link Active</span>
+                      </div>
+                      
+                      <p className="text-[#E8E3D5] text-[14px] leading-relaxed font-black italic tracking-tight">
+                          "{mentorText}"
+                      </p>
+                      
+                      <form onSubmit={handleSubmit} className="mt-4 flex items-center bg-black/60 border border-[#A9DDD3]/20 rounded-2xl p-2 group focus-within:border-[#A9DDD3]/50 transition-all">
+                        <input 
+                          value={input}
+                          onChange={handleInputChange}
+                          placeholder="Ask the Forge..."
+                          className="flex-1 bg-transparent border-none outline-none text-[12px] text-white px-3 italic font-bold"
+                        />
+                        <button type="submit" className="p-2 text-[#A9DDD3] hover:scale-110 transition-all">
+                          {isLoading ? <div className="w-4 h-4 border-2 border-[#A9DDD3] border-t-transparent rounded-full animate-spin" /> : <Send size={16} />}
+                        </button>
+                      </form>
+                  </div>
+              </motion.div>
+          </AnimatePresence>
+
+          <motion.div animate={{ y: [0, -10, 0], scale: isFocused ? 1.1 : 1 }} transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }} className="relative w-32 h-32 md:w-48 md:h-48 cursor-pointer pointer-events-auto">
+              <Image src="/avatar.png" alt="Mentor" width={192} height={192} className="object-contain" priority />
+          </motion.div>
+      </div>
+    </body>
+  );
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <AcademyProvider>
+        <GlobalUI>{children}</GlobalUI>
+      </AcademyProvider>
+    </html>
+  );
+}

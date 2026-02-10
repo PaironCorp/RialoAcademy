@@ -1,32 +1,30 @@
-import { NextResponse } from 'next/server';
+import OpenAI from 'openai';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
+
+// Инициализация клиента для Nous Research
+const openai = new OpenAI({
+  apiKey: process.env.NOUS_API_KEY, // Ключ из настроек Vercel
+  baseURL: "https://inference-api.nousresearch.com/v1",
+});
+
+export const runtime = 'edge'; // Оптимизация для быстрой работы
 
 export async function POST(req: Request) {
-  try {
-    const { messages } = await req.json();
+  const { messages } = await req.json();
 
-    const response = await fetch("https://inference-api.nousresearch.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.NOUS_API_KEY}`,
+  const response = await openai.chat.completions.create({
+    model: "Hermes-3-Llama-3.1-70B", // Наша проверенная модель
+    stream: true, // ВКЛЮЧАЕМ СТРИМИНГ
+    messages: [
+      {
+        role: "system",
+        content: "You are the Rialo Mentor, a sovereign Cyber-Viking guide. Speak with technical authority. Mention 50ms finality and REX privacy. Be punchy and wise."
       },
-      body: JSON.stringify({
-        model: "Hermes-3-Llama-3.1-70B", // Самая стабильная модель из теста
-        messages: [
-          {
-            role: "system",
-            content: "You are the Rialo Mentor, a sovereign Cyber-Viking guide. Speak with authority. Mention 50ms finality and REX privacy. Be concise and technical." 
-          },
-          ...messages,
-        ],
-        temperature: 0.6,
-        max_tokens: 1024,
-      }),
-    });
+      ...messages,
+    ],
+  });
 
-    const data = await response.json();
-    return NextResponse.json({ text: data.choices[0].message.content });
-  } catch (error) {
-    return NextResponse.json({ error: "Neural Link Unstable" }, { status: 500 });
-  }
+  // Превращаем ответ в поток для фронтенда
+  const stream = OpenAIStream(response);
+  return new StreamingTextResponse(stream);
 }
